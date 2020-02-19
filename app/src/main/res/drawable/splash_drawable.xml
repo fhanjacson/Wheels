@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android" android:opacity="opaque">
+
+    <!-- The white background color as one in Amazon, YouTube, or Drive app -->
+    <item android:drawable="@android:color/white"/>
+
+    <!-- App logo -->
+
+    <item>
+        <shape
+        android:shape="rectangle">
+        <gradient
+            android:startColor="#00C9FF"
+            android:endColor="#92FE9D"
+            android:angle="225"/>
+        </shape>
+    </item>
+
+    <item
+        android:drawable="@drawable/wheels"
+        android:gravity="center_horizontal|center_vertical"
+        />
+
+</layer-list>

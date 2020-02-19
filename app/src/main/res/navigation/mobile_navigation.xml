@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/searchFragment">
+
+    <fragment
+        android:id="@+id/searchFragment"
+        android:name="com.fhanjacson.amca.wheels.ui.search.SearchFragment"
+        android:label="@string/title_search"
+        tools:layout="@layout/fragment_search" >
+        <action
+            android:id="@+id/action_searchFragment_to_vehicleListFragment"
+            app:destination="@id/vehicleListFragment" />
+        <action
+            android:id="@+id/action_searchFragment_to_activityFragment"
+            app:destination="@id/activityFragment" />
+        <action
+            android:id="@+id/action_searchFragment_to_accountFragment"
+            app:destination="@id/accountFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/activityFragment"
+        android:name="com.fhanjacson.amca.wheels.ui.activity.ActivityFragment"
+        android:label="@string/title_activity"
+        tools:layout="@layout/fragment_activity" />
+
+    <fragment
+        android:id="@+id/accountFragment"
+        android:name="com.fhanjacson.amca.wheels.ui.account.AccountFragment"
+        android:label="@string/title_account"
+        tools:layout="@layout/fragment_account" />
+    <fragment
+        android:id="@+id/vehicleListFragment"
+        android:name="com.fhanjacson.amca.wheels.ui.vehiclelist.VehicleListFragment"
+        android:label="vehicle_list_fragment"
+        tools:layout="@layout/vehicle_list_fragment" >
+        <action
+            android:id="@+id/action_vehicleListFragment_to_vehicleDetailFragment"
+            app:destination="@id/vehicleDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/vehicleDetailFragment"
+        android:name="com.fhanjacson.amca.wheels.ui.vehicledetail.VehicleDetailFragment"
+        android:label="vehicle_detail_fragment"
+        tools:layout="@layout/vehicle_detail_fragment" >
+        <action
+            android:id="@+id/action_vehicleDetailFragment_to_checkoutFragment"
+            app:destination="@id/checkoutFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/checkoutFragment"
+        android:name="com.fhanjacson.amca.wheels.ui.checkout.CheckoutFragment"
+        android:label="checkout_fragment"
+        tools:layout="@layout/checkout_fragment" />
+</navigation>

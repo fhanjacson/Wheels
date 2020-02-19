@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">Wheels</string>
+    <string name="title_search">Search</string>
+    <string name="title_activity">Activity</string>
+    <string name="title_account">Account</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="text_login_capital">LOG IN</string>
+    <string name="text_signup_capital">SIGN UP</string>
+    <string name="text_emailadress">Email address</string>
+    <string name="text_password">Password</string>
+    <string name="text_forgotpassword">Forgot password?</string>
+    <string name="title_onboarding">Onboarding</string>
+</resources>

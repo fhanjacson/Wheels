@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "597140726366",
+    "firebase_url": "https://wheels-bf405.firebaseio.com",
+    "project_id": "wheels-bf405",
+    "storage_bucket": "wheels-bf405.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:597140726366:android:f451d80ef3538e24550acf",
+        "android_client_info": {
+          "package_name": "com.fhanjacson.amca.wheels"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "597140726366-hh64igld24et7jejeha6ccrcrdgu6hqd.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.fhanjacson.amca.wheels",
+            "certificate_hash": "1e1cee186bfbb8f430aaf74a4ed156986b5d7121"
+          }
+        },
+        {
+          "client_id": "597140726366-7tj2k2r3343uv335k9nipg503b10bss1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDfQ6iFR99AdTKNr7ANANf8KtDjwVwKyzw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "597140726366-7tj2k2r3343uv335k9nipg503b10bss1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
