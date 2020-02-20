@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.viewpager2.adapter.FragmentStateAdapter
+import com.fhanjacson.amca.wheels.Constant
 import com.fhanjacson.amca.wheels.ui.login.LoginFragment
 import com.fhanjacson.amca.wheels.ui.signup.SignupFragment
 
@@ -14,7 +15,7 @@ class OnboardingCollectionAdapter(fragment: Fragment) : FragmentStateAdapter(fra
     }
 
     override fun createFragment(position: Int): Fragment {
-        Log.d("JACSON", "fragment pos: $position")
+        Log.d(Constant.LOG_TAG, "fragment pos: $position")
         lateinit var fragment : Fragment
 
         when (position) {

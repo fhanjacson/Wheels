@@ -23,7 +23,7 @@ class ActivityFragment : Fragment() {
             ViewModelProviders.of(this).get(ActivityViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_activity, container, false)
         val textView: TextView = root.findViewById(R.id.text_activity)
-        activityViewModel.text.observe(this, Observer {
+        activityViewModel.text.observe(viewLifecycleOwner, Observer {
             textView.text = it
         })
         return root
