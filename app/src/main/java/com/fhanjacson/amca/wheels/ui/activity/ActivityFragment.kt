@@ -7,8 +7,9 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import com.fhanjacson.amca.wheels.R
+import kotlinx.android.synthetic.main.fragment_activity.*
 
 class ActivityFragment : Fragment() {
 
@@ -20,9 +21,9 @@ class ActivityFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         activityViewModel =
-            ViewModelProviders.of(this).get(ActivityViewModel::class.java)
+            ViewModelProvider(this).get(ActivityViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_activity, container, false)
-        val textView: TextView = root.findViewById(R.id.text_activity)
+        val textView: TextView = text_activity
         activityViewModel.text.observe(viewLifecycleOwner, Observer {
             textView.text = it
         })

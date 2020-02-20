@@ -11,7 +11,7 @@ import com.fhanjacson.amca.wheels.R
 
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
-
+import kotlinx.android.synthetic.main.fragment_onboarding.view.*
 
 
 /**
@@ -35,8 +35,8 @@ class OnboardingFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        onboardingViewpager = view.findViewById(R.id.onboardingViewpager)
-        onboardingTablayout = view.findViewById(R.id.onboardingTablayout)
+        onboardingViewpager = view.onboardingViewpager
+        onboardingTablayout = view.onboardingTablayout
 
         onboardingTitle.add(getString(R.string.text_login_capital))
         onboardingTitle.add(getString(R.string.text_signup_capital))

@@ -10,16 +10,22 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import coil.api.load
 import com.fhanjacson.amca.wheels.Constant
 import com.fhanjacson.amca.wheels.R
 import com.fhanjacson.amca.wheels.model.Vehicle
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.storage.FirebaseStorage
+import kotlinx.android.synthetic.main.fragment_search.view.*
 
 class SearchFragment : Fragment() {
 
     private lateinit var searchViewModel: SearchViewModel
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var viewAdapter: RecyclerView.Adapter<*>
+    private lateinit var viewManager: RecyclerView.LayoutManager
     private lateinit var vehicleList: List<Vehicle>
 
     override fun onCreateView(
@@ -27,35 +33,50 @@ class SearchFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         Log.d(Constant.LOG_TAG, "SearchFragment onCreateView")
-        searchViewModel =
-            ViewModelProvider(this).get(SearchViewModel::class.java)
+        searchViewModel = ViewModelProvider(this).get(SearchViewModel::class.java)
+//        searchViewModel.getVehicleList().observe(viewLifecycleOwner, Observer {
+//            vehicleList = it
+//        })
+
+
+
+
         val root = inflater.inflate(R.layout.fragment_search, container, false)
 
-        val testView: ImageView = root.findViewById(R.id.test_imageview)
-        searchViewModel.getVehicleList().observe(viewLifecycleOwner, Observer {
-            vehicleList = it
 
-            val storage = FirebaseStorage.getInstance()
-            val ref = storage.getReferenceFromUrl(vehicleList[0].images[0])
-
-            ref.downloadUrl.addOnSuccessListener {url ->
-                Log.d(Constant.LOG_TAG, " Image URL: $url.toString()")
-                testView.load(url)
-            }.addOnFailureListener { e ->
-                Log.d(Constant.LOG_TAG, e.toString())
-            }
-
-        })
 
         return root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val fab = view.findViewById<FloatingActionButton>(R.id.filterFAB)
+        val fab = view.filterFAB
         fab.setOnClickListener {
             Toast.makeText(context, "filter", Toast.LENGTH_SHORT).show()
         }
+
+
+
+
+
+        val vehicleListUpdateObserver = Observer<List<Vehicle>> {
+            vehicleList = it
+            viewManager = LinearLayoutManager(context)
+            viewAdapter = VehicleListAdapter(vehicleList)
+            recyclerView = view.vehicleRecyclerview.apply {
+                setHasFixedSize(true)
+                layoutManager = viewManager
+                adapter = viewAdapter
+            }
+        }
+
+        searchViewModel.getVehicleList().observe(viewLifecycleOwner, vehicleListUpdateObserver)
+
     }
+
+
+
+
 }

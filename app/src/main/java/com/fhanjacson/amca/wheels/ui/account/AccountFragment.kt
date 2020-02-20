@@ -1,21 +1,15 @@
 package com.fhanjacson.amca.wheels.ui.account
 
-import android.accounts.Account
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
-import androidx.navigation.NavController
-import androidx.navigation.Navigation
-import androidx.navigation.fragment.findNavController
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.fhanjacson.amca.wheels.R
+import kotlinx.android.synthetic.main.fragment_account.view.*
 
 class AccountFragment : Fragment() {
 
@@ -33,14 +27,8 @@ class AccountFragment : Fragment() {
     ): View? {
 
 
-        accountViewModel =
-            ViewModelProviders.of(this).get(AccountViewModel::class.java)
+        accountViewModel = ViewModelProvider(this).get(AccountViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_account, container, false)
-//        val textView: TextView = root.findViewById(R.id.text_account)
-//        accountViewModel.text.observe(viewLifecycleOwner, Observer {
-//            textView.text = it
-//        })
-
 
 
         return root
@@ -54,7 +42,7 @@ class AccountFragment : Fragment() {
         viewManager = LinearLayoutManager(context)
         viewAdapter = AccountAdapter(myDataset)
 
-        recyclerView = view.findViewById<RecyclerView>(R.id.accountRecyclerview).apply {
+        recyclerView = view.accountRecyclerview.apply {
             setHasFixedSize(true)
             layoutManager = viewManager
             adapter = viewAdapter

@@ -35,9 +35,12 @@ class SearchViewModel : ViewModel() {
             }
             vehicles.value = vehicleList
         })
-
-
-
         return vehicles
     }
+
+    fun getVehicleList2(): LiveData<List<Vehicle>> {
+        return vehicles
+    }
+
+
 }

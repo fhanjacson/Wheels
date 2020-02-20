@@ -13,4 +13,11 @@
     <string name="text_password">Password</string>
     <string name="text_forgotpassword">Forgot password?</string>
     <string name="title_onboarding">Onboarding</string>
+    <string name="text_vehicle_primary_name">%1$s %2$s</string>
+    <string name="text_currenct_short">MYR %1$s</string>
+    <string name="text_per_day">per day</string>
+    <string name="text_placeholder_location">Bukit Damansara, Kuala Lumpur</string>
+    <string name="text_placeholder_price">MYR 300</string>
+    <string name="text_placeholder_vehicle_primary_name">Perodua Bezza</string>
+    <string name="text_description_car_image">Car Image</string>
 </resources>
