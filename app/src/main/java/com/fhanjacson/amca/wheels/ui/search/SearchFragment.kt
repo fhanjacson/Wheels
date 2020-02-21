@@ -10,6 +10,8 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import coil.api.load
@@ -42,13 +44,6 @@ class SearchFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val fab = view.filterFAB
-        fab.setOnClickListener {
-            Toast.makeText(context, "filter", Toast.LENGTH_SHORT).show()
-        }
-
-
-
 
 
         val vehicleListUpdateObserver = Observer<List<Vehicle>> {
@@ -64,9 +59,12 @@ class SearchFragment : Fragment() {
 
         searchViewModel.getVehicleList().observe(viewLifecycleOwner, vehicleListUpdateObserver)
 
+        val fab = view.filterFAB
+        fab.setOnClickListener {
+            Toast.makeText(context, "filter", Toast.LENGTH_SHORT).show()
+            view.findNavController().navigate(R.id.action_searchFragment_to_vehicleFilterFragment)
+        }
     }
-
-
 
 
 }

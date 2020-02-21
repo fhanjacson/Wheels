@@ -20,4 +20,6 @@
     <string name="text_placeholder_price">MYR 300</string>
     <string name="text_placeholder_vehicle_primary_name">Perodua Bezza</string>
     <string name="text_description_car_image">Car Image</string>
+    <string name="text_view_results">View Results</string>
+    <string name="text_title_filter">Filter</string>
 </resources>
