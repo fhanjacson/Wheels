@@ -27,12 +27,12 @@ class VehicleListAdapter(private val vehicleList: List<Vehicle>) :
     }
 
     override fun onBindViewHolder(holder: VehicleListViewHolder, position: Int) {
+
         holder.vehiclePrimaryName.text = holder.itemView.context.getString(
             R.string.text_vehicle_primary_name,
             vehicleList[position].brand,
             vehicleList[position].model
         )
-
         holder.vehiclePrice.text = holder.itemView.context.getString(
             R.string.text_currenct_short,
             vehicleList[position].price.toString()
@@ -41,8 +41,7 @@ class VehicleListAdapter(private val vehicleList: List<Vehicle>) :
         FirebaseStorage.getInstance().getReferenceFromUrl(vehicleList[position].images[0])
             .downloadUrl.addOnSuccessListener { url ->
             holder.vehicleImageView.load(url) {
-                placeholder(R.drawable.placeholder_200px_200px)
-
+                crossfade(true)
             }
             Log.d(Constant.LOG_TAG, " Image URL: $url.toString()")
         }.addOnFailureListener { e ->

@@ -1,5 +1,6 @@
 package com.fhanjacson.amca.wheels.ui.search
 
+import android.opengl.Visibility
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -15,11 +16,13 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import coil.api.load
+import com.facebook.shimmer.ShimmerFrameLayout
 import com.fhanjacson.amca.wheels.Constant
 import com.fhanjacson.amca.wheels.R
 import com.fhanjacson.amca.wheels.model.Vehicle
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.storage.FirebaseStorage
+import kotlinx.android.synthetic.main.fragment_search.*
 import kotlinx.android.synthetic.main.fragment_search.view.*
 
 class SearchFragment : Fragment() {
@@ -29,6 +32,7 @@ class SearchFragment : Fragment() {
     private lateinit var viewAdapter: RecyclerView.Adapter<*>
     private lateinit var viewManager: RecyclerView.LayoutManager
     private lateinit var vehicleList: List<Vehicle>
+    private lateinit var shimmerView: ShimmerFrameLayout
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -39,6 +43,7 @@ class SearchFragment : Fragment() {
         Log.d(Constant.LOG_TAG, "SearchFragment onCreateView")
         searchViewModel = ViewModelProvider(this).get(SearchViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_search, container, false)
+        shimmerView = root.shimmer_view_container
         return root
     }
 
@@ -55,6 +60,9 @@ class SearchFragment : Fragment() {
                 layoutManager = viewManager
                 adapter = viewAdapter
             }
+
+            shimmerView.stopShimmerAnimation()
+            shimmerView.visibility = View.GONE
         }
 
         searchViewModel.getVehicleList().observe(viewLifecycleOwner, vehicleListUpdateObserver)
@@ -66,5 +74,13 @@ class SearchFragment : Fragment() {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        shimmerView.startShimmerAnimation()
+    }
 
+    override fun onPause() {
+        shimmerView.stopShimmerAnimation()
+        super.onPause()
+    }
 }

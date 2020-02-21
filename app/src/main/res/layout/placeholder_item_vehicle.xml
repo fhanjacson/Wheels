@@ -13,9 +13,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <ImageView
-            android:id="@+id/vehicleImage"
-            android:layout_width="wrap_content"
+        <View
+            android:id="@+id/placeholder_vehicleImage"
+            android:background="@color/background"
+            android:layout_width="0dp"
             android:layout_height="200dp"
             android:contentDescription="@string/text_description_car_image"
             app:layout_constraintEnd_toEndOf="parent"
@@ -23,21 +24,23 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:srcCompat="@tools:sample/backgrounds/scenic" />
 
-        <TextView
-            android:id="@+id/vehicleName"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
+        <View
+            android:id="@+id/placeholder_vehicleName"
+            android:background="@color/background"
+            android:layout_width="100dp"
+            android:layout_height="20dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:text="@string/text_placeholder_vehicle_primary_name"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/vehicleImage" />
+            app:layout_constraintTop_toBottomOf="@+id/placeholder_vehicleImage" />
 
-        <TextView
-            android:id="@+id/vehicleLocation"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <View
+            android:id="@+id/placeholder_vehicleLocation"
+            android:background="@color/background"
+            android:layout_width="150dp"
+            android:layout_height="20dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
@@ -45,23 +48,25 @@
             android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/vehicleName" />
+            app:layout_constraintTop_toBottomOf="@+id/placeholder_vehicleName" />
 
-        <TextView
-            android:id="@+id/vehiclePrice"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <View
+            android:id="@+id/placeholder_vehiclePrice"
+            android:background="@color/background"
+            android:layout_width="70dp"
+            android:layout_height="20dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:text="@string/text_placeholder_price"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/vehicleImage" />
+            app:layout_constraintTop_toBottomOf="@+id/placeholder_vehicleImage" />
 
-        <TextView
-            android:id="@+id/perday"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <View
+            android:id="@+id/placeholder_perday"
+            android:background="@color/background"
+            android:layout_width="40dp"
+            android:layout_height="20dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
@@ -69,7 +74,7 @@
             android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/vehiclePrice" />
+            app:layout_constraintTop_toBottomOf="@+id/placeholder_vehiclePrice" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.cardview.widget.CardView>

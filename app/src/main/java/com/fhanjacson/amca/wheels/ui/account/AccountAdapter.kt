@@ -17,6 +17,7 @@ class AccountAdapter(private val myDataset: Array<String>) : RecyclerView.Adapte
 
     override fun onBindViewHolder(holder: AccountSettingViewHolder, position: Int) {
         holder.accountSettingTextView.text = myDataset[position]
+
     }
 
 }
