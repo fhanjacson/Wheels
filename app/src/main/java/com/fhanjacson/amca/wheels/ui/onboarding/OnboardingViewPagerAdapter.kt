@@ -9,7 +9,7 @@ import com.fhanjacson.amca.wheels.Constant
 import com.fhanjacson.amca.wheels.ui.login.LoginFragment
 import com.fhanjacson.amca.wheels.ui.signup.SignupFragment
 
-class OnboardingCollectionAdapter(fragment: Fragment) : FragmentStateAdapter(fragment) {
+class OnboardingViewPagerAdapter(fragment: Fragment) : FragmentStateAdapter(fragment) {
     override fun getItemCount(): Int {
         return 2
     }
