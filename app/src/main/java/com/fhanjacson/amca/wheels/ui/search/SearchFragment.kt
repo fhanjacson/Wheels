@@ -36,17 +36,7 @@ class SearchFragment : Fragment() {
 
         Log.d(Constant.LOG_TAG, "SearchFragment onCreateView")
         searchViewModel = ViewModelProvider(this).get(SearchViewModel::class.java)
-//        searchViewModel.getVehicleList().observe(viewLifecycleOwner, Observer {
-//            vehicleList = it
-//        })
-
-
-
-
         val root = inflater.inflate(R.layout.fragment_search, container, false)
-
-
-
         return root
     }
 

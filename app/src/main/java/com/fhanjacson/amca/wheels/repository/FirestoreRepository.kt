@@ -8,7 +8,7 @@ class FirestoreRepository {
     var fireStoreDB = FirebaseFirestore.getInstance()
 //    var user = FirebaseAuth.getInstance().currentUser
 
-    fun getVehicleList(): CollectionReference {
+    fun vehicleList(): CollectionReference {
         return fireStoreDB.collection("vehicleList")
     }
 

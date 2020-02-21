@@ -16,10 +16,10 @@ class SearchViewModel : ViewModel() {
     var firebaseRepository = FirestoreRepository()
     var vehicles: MutableLiveData<List<Vehicle>> = MutableLiveData()
 
-    fun getVehicleList() : LiveData<List<Vehicle>> {
-        Log.d(Constant.LOG_TAG, "SearchViewModel getVehicleList")
+    fun getRealTimeVehicleList() : LiveData<List<Vehicle>> {
+        Log.d(Constant.LOG_TAG, "SearchViewModel getRealTimeVehicleList")
 
-        firebaseRepository.getVehicleList().addSnapshotListener(EventListener<QuerySnapshot> { value, e ->
+        firebaseRepository.vehicleList().addSnapshotListener(EventListener<QuerySnapshot> { value, e ->
             if (e != null) {
                 Log.d(Constant.LOG_TAG, "Listen failed.", e)
                 vehicles.value = null
@@ -38,9 +38,21 @@ class SearchViewModel : ViewModel() {
         return vehicles
     }
 
-    fun getVehicleList2(): LiveData<List<Vehicle>> {
-        return vehicles
-    }
+   fun getVehicleList() : LiveData<List<Vehicle>> {
+       Log.d(Constant.LOG_TAG, "getVehicleList")
+
+       firebaseRepository.vehicleList().get().addOnSuccessListener { docs ->
+           val vehicleList: MutableList<Vehicle> = mutableListOf()
+           for (doc in docs) {
+               val vehicle = doc.toObject(Vehicle::class.java)
+               vehicle.id = doc.id
+               vehicleList.add(vehicle)
+           }
+           vehicles.value = vehicleList
+       }
+
+       return vehicles
+   }
 
 
 }
