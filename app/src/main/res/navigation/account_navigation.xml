@@ -1,5 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/account_navigation">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/account_navigation"
+    app:startDestination="@id/accountFragment2">
 
+    <fragment
+        android:id="@+id/accountFragment2"
+        android:name="com.fhanjacson.amca.wheels.ui.account.AccountFragment"
+        android:label="AccountFragment" >
+        <action
+            android:id="@+id/action_accountFragment2_to_onboardingFragment2"
+            app:destination="@id/onboardingFragment2" />
+    </fragment>
+    <fragment
+        android:id="@+id/onboardingFragment2"
+        android:name="com.fhanjacson.amca.wheels.ui.onboarding.OnboardingFragment"
+        android:label="fragment_onboarding"
+        tools:layout="@layout/fragment_onboarding" />
 </navigation>
