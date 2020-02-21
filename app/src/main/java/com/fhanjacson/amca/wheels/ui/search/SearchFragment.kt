@@ -1,22 +1,28 @@
 package com.fhanjacson.amca.wheels.ui.search
 
+import android.opengl.Visibility
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import coil.api.load
 import com.facebook.shimmer.ShimmerFrameLayout
 import com.fhanjacson.amca.wheels.Constant
 import com.fhanjacson.amca.wheels.R
 import com.fhanjacson.amca.wheels.model.Vehicle
-import com.fhanjacson.amca.wheels.ui.vehiclefilter.VehicleFilterFragment
+import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.firebase.storage.FirebaseStorage
+import kotlinx.android.synthetic.main.fragment_search.*
 import kotlinx.android.synthetic.main.fragment_search.view.*
 
 class SearchFragment : Fragment() {
@@ -27,9 +33,6 @@ class SearchFragment : Fragment() {
     private lateinit var viewManager: RecyclerView.LayoutManager
     private lateinit var vehicleList: List<Vehicle>
     private lateinit var shimmerView: ShimmerFrameLayout
-    private lateinit var fragmentTransaction: FragmentTransaction
-    private lateinit var vehicleFilterFragment: VehicleFilterFragment
-
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -41,9 +44,6 @@ class SearchFragment : Fragment() {
         searchViewModel = ViewModelProvider(this).get(SearchViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_search, container, false)
         shimmerView = root.shimmer_view_container
-
-        fragmentTransaction = childFragmentManager.beginTransaction()
-        vehicleFilterFragment = VehicleFilterFragment()
         return root
     }
 
@@ -70,8 +70,7 @@ class SearchFragment : Fragment() {
         val fab = view.filterFAB
         fab.setOnClickListener {
             Toast.makeText(context, "filter", Toast.LENGTH_SHORT).show()
-//            view.findNavController().navigate(R.id.action_searchFragment_to_vehicleFilterFragment)
-            showVehicleFilter()
+            view.findNavController().navigate(R.id.action_searchFragment_to_vehicleFilterFragment)
         }
     }
 
@@ -84,13 +83,4 @@ class SearchFragment : Fragment() {
         shimmerView.stopShimmerAnimation()
         super.onPause()
     }
-
-    private fun showVehicleFilter() {
-        fragmentTransaction.add(R.id.vehicleFilterFragmentContainer, vehicleFilterFragment).commit()
-    }
-
-    private fun hideVehicleFilter() {
-        fragmentTransaction.hide(vehicleFilterFragment).commit()
-    }
-
 }

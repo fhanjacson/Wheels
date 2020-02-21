@@ -19,7 +19,7 @@ import kotlinx.android.synthetic.main.fragment_onboarding.view.*
  */
 class OnboardingFragment : Fragment() {
 
-    private lateinit var onboardingViewPagerAdapter: OnboardingViewPagerAdapter
+    private lateinit var onboardingCollectionAdapter: OnboardingCollectionAdapter
     private lateinit var onboardingViewpager: ViewPager2
     private lateinit var onboardingTablayout: TabLayout
     private var onboardingTitle = arrayListOf<String>()
@@ -42,8 +42,8 @@ class OnboardingFragment : Fragment() {
         onboardingTitle.add(getString(R.string.text_signup_capital))
 
 
-        onboardingViewPagerAdapter = OnboardingViewPagerAdapter(this)
-        onboardingViewpager.adapter = onboardingViewPagerAdapter
+        onboardingCollectionAdapter = OnboardingCollectionAdapter(this)
+        onboardingViewpager.adapter = onboardingCollectionAdapter
         TabLayoutMediator(onboardingTablayout, onboardingViewpager) {tab, position ->
             tab.text = onboardingTitle[position]
         }.attach()

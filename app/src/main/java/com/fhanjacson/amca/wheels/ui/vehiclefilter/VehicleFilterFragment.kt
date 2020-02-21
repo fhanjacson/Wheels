@@ -6,17 +6,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageButton
 
 import com.fhanjacson.amca.wheels.R
-import kotlinx.android.synthetic.main.fragment_vehicle_filter.view.*
 
 /**
  * A simple [Fragment] subclass.
  */
 class VehicleFilterFragment : Fragment() {
-
-    lateinit var closeButton: ImageButton
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -26,12 +22,5 @@ class VehicleFilterFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_vehicle_filter, container, false)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
 
-        closeButton = view.filterCloseButton
-        closeButton.setOnClickListener({
-
-            })
-    }
 }

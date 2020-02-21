@@ -1,21 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/search_navigation"
-    app:startDestination="@id/searchFragment2">
+    xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/search_navigation">
 
-    <fragment
-        android:id="@+id/searchFragment2"
-        android:name="com.fhanjacson.amca.wheels.ui.search.SearchFragment"
-        android:label="SearchFragment" >
-        <action
-            android:id="@+id/action_searchFragment2_to_vehicleFilterFragment2"
-            app:destination="@id/vehicleFilterFragment2" />
-    </fragment>
-    <fragment
-        android:id="@+id/vehicleFilterFragment2"
-        android:name="com.fhanjacson.amca.wheels.ui.vehiclefilter.VehicleFilterFragment"
-        android:label="fragment_vehicle_filter"
-        tools:layout="@layout/fragment_vehicle_filter" />
 </navigation>
