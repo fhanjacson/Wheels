@@ -22,7 +22,7 @@ class OnboardingFragment : Fragment() {
     private lateinit var onboardingCollectionAdapter: OnboardingCollectionAdapter
     private lateinit var onboardingViewpager: ViewPager2
     private lateinit var onboardingTablayout: TabLayout
-    private var onboardingTitle = arrayListOf<String>()
+    private var onboardingViewPagerTitle = arrayListOf<String>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -38,14 +38,14 @@ class OnboardingFragment : Fragment() {
         onboardingViewpager = view.onboardingViewpager
         onboardingTablayout = view.onboardingTablayout
 
-        onboardingTitle.add(getString(R.string.text_login_capital))
-        onboardingTitle.add(getString(R.string.text_signup_capital))
+        onboardingViewPagerTitle.add(getString(R.string.text_login_capital))
+        onboardingViewPagerTitle.add(getString(R.string.text_signup_capital))
 
 
         onboardingCollectionAdapter = OnboardingCollectionAdapter(this)
         onboardingViewpager.adapter = onboardingCollectionAdapter
         TabLayoutMediator(onboardingTablayout, onboardingViewpager) {tab, position ->
-            tab.text = onboardingTitle[position]
+            tab.text = onboardingViewPagerTitle[position]
         }.attach()
     }
 }

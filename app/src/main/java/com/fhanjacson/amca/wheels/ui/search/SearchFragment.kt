@@ -65,12 +65,13 @@ class SearchFragment : Fragment() {
             shimmerView.visibility = View.GONE
         }
 
+        //TODO: vehicle list recyclerview should only get the list one time only, except user refresh (refresh layout click tab again) or filter
         searchViewModel.getVehicleList().observe(viewLifecycleOwner, vehicleListUpdateObserver)
 
         val fab = view.filterFAB
         fab.setOnClickListener {
             Toast.makeText(context, "filter", Toast.LENGTH_SHORT).show()
-            view.findNavController().navigate(R.id.action_searchFragment_to_vehicleFilterFragment)
+            findNavController().navigate(R.id.action_searchFragment2_to_vehicleFilterFragment)
         }
     }
 
