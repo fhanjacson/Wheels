@@ -15,7 +15,6 @@ import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import coil.api.load
 import com.facebook.shimmer.ShimmerFrameLayout
 import com.fhanjacson.amca.wheels.Constant
 import com.fhanjacson.amca.wheels.R
