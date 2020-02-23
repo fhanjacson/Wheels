@@ -49,10 +49,24 @@ class SearchViewModel : ViewModel() {
                vehicleList.add(vehicle)
            }
            vehicles.value = vehicleList
+           Log.d(Constant.LOG_TAG, "total vehicle: ${vehicleList.size} ")
        }
 
        return vehicles
    }
+
+    fun getVehicleList2() {
+        firebaseRepository.vehicleList().get().addOnSuccessListener { docs ->
+            val vehicleList: MutableList<Vehicle> = mutableListOf()
+            for (doc in docs) {
+                val vehicle = doc.toObject(Vehicle::class.java)
+                vehicle.id = doc.id
+                vehicleList.add(vehicle)
+            }
+            Log.d(Constant.LOG_TAG, "total vehicle: ${vehicleList.size} ")
+        }
+    }
+
 
 
 }

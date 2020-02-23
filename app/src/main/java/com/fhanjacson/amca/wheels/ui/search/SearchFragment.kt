@@ -13,14 +13,21 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
+import androidx.paging.PagedList
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import coil.api.load
 import com.facebook.shimmer.ShimmerFrameLayout
 import com.fhanjacson.amca.wheels.Constant
 import com.fhanjacson.amca.wheels.R
 import com.fhanjacson.amca.wheels.model.Vehicle
+import com.firebase.ui.firestore.paging.FirestorePagingAdapter
+import com.firebase.ui.firestore.paging.FirestorePagingOptions
+import com.firebase.ui.firestore.paging.LoadingState
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 import com.google.firebase.storage.FirebaseStorage
 import kotlinx.android.synthetic.main.fragment_search.*
 import kotlinx.android.synthetic.main.fragment_search.view.*
@@ -29,7 +36,12 @@ class SearchFragment : Fragment() {
 
     private lateinit var searchViewModel: SearchViewModel
     private lateinit var recyclerView: RecyclerView
-    private lateinit var viewAdapter: RecyclerView.Adapter<*>
+    private lateinit var viewAdapter: FirestorePagingAdapter<Vehicle, VehicleListViewHolder>
+    private val mFirestore = FirebaseFirestore.getInstance()
+    private val mVehiclesCollection = mFirestore.collection("vehicleList")
+    private val mQuery = mVehiclesCollection.orderBy("price", Query.Direction.DESCENDING)
+    private lateinit var swipeRefreshLayout: SwipeRefreshLayout
+
     private lateinit var viewManager: RecyclerView.LayoutManager
     private lateinit var vehicleList: List<Vehicle>
     private lateinit var shimmerView: ShimmerFrameLayout
@@ -40,10 +52,17 @@ class SearchFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        Log.d(Constant.LOG_TAG, "SearchFragment onCreateView")
-        searchViewModel = ViewModelProvider(this).get(SearchViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_search, container, false)
-        shimmerView = root.shimmer_view_container
+
+        recyclerView = root.vehicleRecyclerview
+        recyclerView.setHasFixedSize(true)
+        recyclerView.layoutManager = LinearLayoutManager(context)
+        swipeRefreshLayout = root.refreshLayout
+
+        searchViewModel = ViewModelProvider(this).get(SearchViewModel::class.java)
+        searchViewModel.getVehicleList2()
+
+        setupAdapter()
         return root
     }
 
@@ -51,37 +70,87 @@ class SearchFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
 
-        val vehicleListUpdateObserver = Observer<List<Vehicle>> {
-            vehicleList = it
-            viewManager = LinearLayoutManager(context)
-            viewAdapter = VehicleListAdapter(vehicleList)
-            recyclerView = view.vehicleRecyclerview.apply {
-                setHasFixedSize(true)
-                layoutManager = viewManager
-                adapter = viewAdapter
-            }
-
-            shimmerView.stopShimmerAnimation()
-            shimmerView.visibility = View.GONE
-        }
-
-        //TODO: vehicle list recyclerview should only get the list one time only, except user refresh (refresh layout click tab again) or filter
-        searchViewModel.getVehicleList().observe(viewLifecycleOwner, vehicleListUpdateObserver)
-
         val fab = view.filterFAB
         fab.setOnClickListener {
             Toast.makeText(context, "filter", Toast.LENGTH_SHORT).show()
-            findNavController().navigate(R.id.action_searchFragment2_to_vehicleFilterFragment)
+//            findNavController().navigate(R.id.action_searchFragment2_to_vehicleFilterFragment)
         }
     }
 
-    override fun onResume() {
-        super.onResume()
-        shimmerView.startShimmerAnimation()
+
+    private fun setupAdapter() {
+
+        // Init Paging Configuration
+        val config = PagedList.Config.Builder()
+            .setEnablePlaceholders(false)
+            .setPrefetchDistance(2)
+            .setPageSize(10)
+            .build()
+
+        // Init Adapter Configuration
+        val options = FirestorePagingOptions.Builder<Vehicle>()
+            .setLifecycleOwner(this)
+            .setQuery(mQuery, config, Vehicle::class.java)
+            .build()
+
+        // Instantiate Paging Adapter
+        viewAdapter = object: FirestorePagingAdapter<Vehicle, VehicleListViewHolder>(options) {
+            override fun onCreateViewHolder(
+                parent: ViewGroup,
+                viewType: Int
+            ): VehicleListViewHolder {
+                val view = layoutInflater.inflate(R.layout.item_vehicle, parent, false)
+                return VehicleListViewHolder(view)
+            }
+
+            override fun onBindViewHolder(
+                holder: VehicleListViewHolder,
+                position: Int,
+                model: Vehicle
+            ) {
+                holder.bind(model)
+            }
+
+            override fun onError(e: Exception) {
+                super.onError(e)
+                Log.e("MainActivity", e.message.toString())
+            }
+
+
+            override fun onLoadingStateChanged(state: LoadingState) {
+                when (state) {
+                    LoadingState.LOADING_INITIAL -> {
+                        swipeRefreshLayout.isRefreshing = true
+                    }
+
+                    LoadingState.LOADING_MORE -> {
+                        swipeRefreshLayout.isRefreshing = true
+                    }
+
+                    LoadingState.LOADED -> {
+                        swipeRefreshLayout.isRefreshing = false
+                    }
+
+                    LoadingState.ERROR -> {
+                        Toast.makeText(
+                            context,
+                            "Error Occurred!",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        swipeRefreshLayout.isRefreshing = false
+                    }
+
+                    LoadingState.FINISHED -> {
+                        swipeRefreshLayout.isRefreshing = false
+                    }
+                }
+            }
+
+
+        }
+
+        recyclerView.adapter = viewAdapter
+
     }
 
-    override fun onPause() {
-        shimmerView.stopShimmerAnimation()
-        super.onPause()
-    }
 }
