@@ -7,14 +7,18 @@ import androidx.lifecycle.ViewModel
 import com.fhanjacson.amca.wheels.Constant
 import com.fhanjacson.amca.wheels.model.Vehicle
 import com.fhanjacson.amca.wheels.repository.FirestoreRepository
-import com.google.firebase.firestore.EventListener
-import com.google.firebase.firestore.QuerySnapshot
+import com.firebase.ui.common.ChangeEventType
+import com.firebase.ui.firestore.ChangeEventListener
+import com.firebase.ui.firestore.ClassSnapshotParser
+import com.firebase.ui.firestore.FirestoreArray
+import com.google.firebase.firestore.*
 
 class SearchViewModel : ViewModel() {
 
-    val TAG = "SEARCH_VIEWMODEL"
     var firebaseRepository = FirestoreRepository()
     var vehicles: MutableLiveData<List<Vehicle>> = MutableLiveData()
+
+
 
     fun getRealTimeVehicleList() : LiveData<List<Vehicle>> {
         Log.d(Constant.LOG_TAG, "SearchViewModel getRealTimeVehicleList")
@@ -55,17 +59,6 @@ class SearchViewModel : ViewModel() {
        return vehicles
    }
 
-    fun getVehicleList2() {
-        firebaseRepository.vehicleList().get().addOnSuccessListener { docs ->
-            val vehicleList: MutableList<Vehicle> = mutableListOf()
-            for (doc in docs) {
-                val vehicle = doc.toObject(Vehicle::class.java)
-                vehicle.id = doc.id
-                vehicleList.add(vehicle)
-            }
-            Log.d(Constant.LOG_TAG, "total vehicle: ${vehicleList.size} ")
-        }
-    }
 
 
 

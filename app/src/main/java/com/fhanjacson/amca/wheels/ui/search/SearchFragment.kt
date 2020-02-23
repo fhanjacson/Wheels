@@ -17,10 +17,11 @@ import androidx.paging.PagedList
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import coil.api.load
+import com.bumptech.glide.Glide
 import com.facebook.shimmer.ShimmerFrameLayout
 import com.fhanjacson.amca.wheels.Constant
 import com.fhanjacson.amca.wheels.R
+import com.fhanjacson.amca.wheels.base.GlideApp
 import com.fhanjacson.amca.wheels.model.Vehicle
 import com.firebase.ui.firestore.paging.FirestorePagingAdapter
 import com.firebase.ui.firestore.paging.FirestorePagingOptions
@@ -38,6 +39,7 @@ class SearchFragment : Fragment() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var viewAdapter: FirestorePagingAdapter<Vehicle, VehicleListViewHolder>
     private val mFirestore = FirebaseFirestore.getInstance()
+    private val storage = FirebaseStorage.getInstance()
     private val mVehiclesCollection = mFirestore.collection("vehicleList")
     private val mQuery = mVehiclesCollection.orderBy("price", Query.Direction.DESCENDING)
     private lateinit var swipeRefreshLayout: SwipeRefreshLayout
@@ -54,14 +56,17 @@ class SearchFragment : Fragment() {
 
         val root = inflater.inflate(R.layout.fragment_search, container, false)
 
+        shimmerView = root.shimmer_view_container
+
         recyclerView = root.vehicleRecyclerview
         recyclerView.setHasFixedSize(true)
+        recyclerView.setItemViewCacheSize(10)
         recyclerView.layoutManager = LinearLayoutManager(context)
         swipeRefreshLayout = root.refreshLayout
 
         searchViewModel = ViewModelProvider(this).get(SearchViewModel::class.java)
-        searchViewModel.getVehicleList2()
 
+        shimmerView.startShimmerAnimation()
         setupAdapter()
         return root
     }
@@ -75,8 +80,31 @@ class SearchFragment : Fragment() {
             Toast.makeText(context, "filter", Toast.LENGTH_SHORT).show()
 //            findNavController().navigate(R.id.action_searchFragment2_to_vehicleFilterFragment)
         }
+
+        swipeRefreshLayout.setOnRefreshListener {
+            viewAdapter.refresh()
+        }
     }
 
+    override fun onStart() {
+        super.onStart()
+        viewAdapter.startListening()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        viewAdapter.stopListening()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        shimmerView.startShimmerAnimation()
+    }
+
+    override fun onPause() {
+        shimmerView.stopShimmerAnimation()
+        super.onPause()
+    }
 
     private fun setupAdapter() {
 
@@ -108,7 +136,23 @@ class SearchFragment : Fragment() {
                 position: Int,
                 model: Vehicle
             ) {
-                holder.bind(model)
+                holder.vehiclePrimaryName.text = holder.itemView.context.getString(
+                    R.string.text_vehicle_primary_name,
+                    model.brand,
+                    model.model
+                )
+                holder.vehiclePrice.text = holder.itemView.context.getString(
+                    R.string.text_currenct_short,
+                    model.price.toString()
+                )
+
+                holder.vehicleImageView.setImageDrawable(null)
+
+                val gsRef = storage.getReferenceFromUrl(model.images[0])
+                GlideApp.with(context!!)
+                    .load(gsRef)
+                    .into(holder.vehicleImageView)
+
             }
 
             override fun onError(e: Exception) {
@@ -121,6 +165,9 @@ class SearchFragment : Fragment() {
                 when (state) {
                     LoadingState.LOADING_INITIAL -> {
                         swipeRefreshLayout.isRefreshing = true
+                        shimmerView.startShimmerAnimation()
+                        shimmerView.visibility = View.VISIBLE
+
                     }
 
                     LoadingState.LOADING_MORE -> {
@@ -129,6 +176,8 @@ class SearchFragment : Fragment() {
 
                     LoadingState.LOADED -> {
                         swipeRefreshLayout.isRefreshing = false
+                        shimmerView.stopShimmerAnimation()
+                        shimmerView.visibility = View.GONE
                     }
 
                     LoadingState.ERROR -> {
@@ -137,11 +186,14 @@ class SearchFragment : Fragment() {
                             "Error Occurred!",
                             Toast.LENGTH_SHORT
                         ).show()
+                        viewAdapter.retry()
                         swipeRefreshLayout.isRefreshing = false
                     }
 
                     LoadingState.FINISHED -> {
                         swipeRefreshLayout.isRefreshing = false
+                        shimmerView.stopShimmerAnimation()
+                        shimmerView.visibility = View.GONE
                     }
                 }
             }
@@ -152,5 +204,9 @@ class SearchFragment : Fragment() {
         recyclerView.adapter = viewAdapter
 
     }
+
+
+
+
 
 }
