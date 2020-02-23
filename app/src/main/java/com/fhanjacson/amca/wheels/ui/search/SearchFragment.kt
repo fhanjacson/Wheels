@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -43,11 +44,15 @@ class SearchFragment : Fragment() {
         searchViewModel = ViewModelProvider(this).get(SearchViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_search, container, false)
         shimmerView = root.shimmer_view_container
+
+
+
         return root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
 
 
         val vehicleListUpdateObserver = Observer<List<Vehicle>> {
@@ -65,6 +70,7 @@ class SearchFragment : Fragment() {
         }
 
         //TODO: vehicle list recyclerview should only get the list one time only, except user refresh (refresh layout click tab again) or filter
+
         searchViewModel.getVehicleList().observe(viewLifecycleOwner, vehicleListUpdateObserver)
 
         val fab = view.filterFAB
@@ -72,6 +78,8 @@ class SearchFragment : Fragment() {
             Toast.makeText(context, "filter", Toast.LENGTH_SHORT).show()
             findNavController().navigate(R.id.action_searchFragment2_to_vehicleFilterFragment)
         }
+
+
     }
 
     override fun onResume() {

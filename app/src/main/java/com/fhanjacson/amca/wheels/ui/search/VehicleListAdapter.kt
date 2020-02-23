@@ -2,7 +2,9 @@ package com.fhanjacson.amca.wheels.ui.search
 
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.fhanjacson.amca.wheels.Constant
@@ -33,6 +35,9 @@ class VehicleListAdapter(private val vehicleList: List<Vehicle>) :
 
     override fun onBindViewHolder(holder: VehicleListViewHolder, position: Int) {
 
+
+//        holder.starView.visibility = View.GONE
+
         holder.vehiclePrimaryName.text = holder.itemView.context.getString(
             R.string.text_vehicle_primary_name,
             vehicleList[position].brand,
@@ -45,5 +50,12 @@ class VehicleListAdapter(private val vehicleList: List<Vehicle>) :
         GlideApp.with(holder.itemView.context)
             .load(storage.getReferenceFromUrl(vehicleList[position].images[0]))
             .into(holder.vehicleImageView)
+
+
+        holder.itemView.setOnClickListener{ view ->
+            view.findNavController().navigate(R.id.action_searchFragment2_to_vehicleDetailFragment)
+        }
     }
+
+
 }
