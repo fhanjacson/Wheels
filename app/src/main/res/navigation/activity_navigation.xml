@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/activityFragment2"
         android:name="com.fhanjacson.amca.wheels.ui.activity.ActivityFragment"
-        android:label="ActivityFragment" >
+        android:label="Activities" >
         <action
             android:id="@+id/action_activityFragment2_to_onboardingFragment"
             app:destination="@id/onboardingFragment" />
@@ -16,6 +16,6 @@
     <fragment
         android:id="@+id/onboardingFragment"
         android:name="com.fhanjacson.amca.wheels.ui.onboarding.OnboardingFragment"
-        android:label="fragment_onboarding"
+        android:label="@string/text_login_or_signup"
         tools:layout="@layout/fragment_onboarding" />
 </navigation>

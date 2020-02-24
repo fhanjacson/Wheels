@@ -50,7 +50,7 @@ class SearchViewModel : ViewModel() {
 
         firebaseRepository.vehicleList().addSnapshotListener(EventListener<QuerySnapshot> { value, e ->
             if (e != null) {
-                Log.d(Constant.LOG_TAG, "Listen failed.", e)
+                Log.d(Constant.LOG_TAG, e.toString())
                 vehicles.value = null
                 return@EventListener
             }

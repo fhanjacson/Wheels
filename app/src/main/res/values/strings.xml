@@ -24,4 +24,5 @@
     <string name="text_title_filter">Filter</string>
     <string name="title_trip_history">Trip History</string>
     <string name="title_account_history">Account History</string>
+    <string name="text_login_or_signup">Login or Sign Up</string>
 </resources>

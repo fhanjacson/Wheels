@@ -12,4 +12,8 @@ class FirestoreRepository {
         return fireStoreDB.collection("vehicleList")
     }
 
+    fun tripList(): CollectionReference {
+        return fireStoreDB.collection("tripList")
+    }
+
 }
