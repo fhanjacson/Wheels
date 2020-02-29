@@ -14,7 +14,7 @@
     <string name="text_forgotpassword">Forgot password?</string>
     <string name="title_onboarding">Onboarding</string>
     <string name="text_vehicle_primary_name">%1$s %2$s</string>
-    <string name="text_currenct_short">MYR %1$s</string>
+    <string name="text_currency_price_short">MYR %1$s</string>
     <string name="text_per_day">per day</string>
     <string name="text_placeholder_location">Bukit Damansara, Kuala Lumpur</string>
     <string name="text_placeholder_price">MYR 300</string>
@@ -25,4 +25,28 @@
     <string name="title_trip_history">Trip History</string>
     <string name="title_account_history">Account History</string>
     <string name="text_login_or_signup">Login or Sign Up</string>
+    <string name="placeholder_full_name">Full name</string>
+    <string name="placeholder_email">username@email.com</string>
+    <string name="text_logout">Log Out</string>
+    <string name="text_login">Login</string>
+    <string name="text_profile">Profile</string>
+    <string name="text_account">Account</string>
+    <string name="text_activities">Activities</string>
+    <string name="text_search">Search</string>
+    <string name="text_filter">Filter</string>
+    <string name="text_checkout">Checkout</string>
+    <string name="text_vehicle_detail">Vehicle Detail</string>
+    <string name="text_payment">Payment</string>
+    <string name="text_proceed">PROCEED</string>
+    <string name="text_vehicle_rating">%s★ (%s trips)</string>
+    <string name="text_vehicle_type_sedan">Sedan</string>
+    <string name="text_vehicle_type_suv">SUV</string>
+    <string name="text_vehicle_type_van">VAN</string>
+    <string name="text_vehicle_type_pickup">Pickup</string>
+    <string name="text_vehicle_type_jeep">Jeep</string>
+    <string name="text_vehicle_number_seat">%d seats</string>
+    <string name="text_vehicle_transmission_at">AT</string>
+    <string name="text_vehicle_transmission_mt">MT</string>
+    <string name="text_vehicle_mpg">%d MPG</string>
+
 </resources>

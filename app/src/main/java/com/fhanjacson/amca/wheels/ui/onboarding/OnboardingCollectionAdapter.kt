@@ -8,6 +8,8 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.fhanjacson.amca.wheels.Constant
 import com.fhanjacson.amca.wheels.ui.login.LoginFragment
 import com.fhanjacson.amca.wheels.ui.signup.SignupFragment
+import kotlinx.android.synthetic.main.signup_fragment.*
+import kotlin.math.sign
 
 class OnboardingCollectionAdapter(fragment: Fragment) : FragmentStateAdapter(fragment) {
     override fun getItemCount(): Int {
@@ -15,7 +17,6 @@ class OnboardingCollectionAdapter(fragment: Fragment) : FragmentStateAdapter(fra
     }
 
     override fun createFragment(position: Int): Fragment {
-        Log.d(Constant.LOG_TAG, "fragment pos: $position")
         lateinit var fragment : Fragment
 
         when (position) {

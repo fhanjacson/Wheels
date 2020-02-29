@@ -1,29 +1,24 @@
 package com.fhanjacson.amca.wheels.ui.search
 
-import android.opengl.Visibility
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
-import android.widget.ImageView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.facebook.shimmer.ShimmerFrameLayout
-import com.fhanjacson.amca.wheels.Constant
 import com.fhanjacson.amca.wheels.R
 import com.fhanjacson.amca.wheels.model.Vehicle
-import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.firebase.storage.FirebaseStorage
-import kotlinx.android.synthetic.main.fragment_search.*
+import com.fhanjacson.amca.wheels.repository.FirestoreRepository
 import kotlinx.android.synthetic.main.fragment_search.view.*
+import java.util.*
+import java.util.concurrent.ThreadLocalRandom
+
 
 class SearchFragment : Fragment() {
 
@@ -40,7 +35,6 @@ class SearchFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        Log.d(Constant.LOG_TAG, "SearchFragment onCreateView")
         searchViewModel = ViewModelProvider(this).get(SearchViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_search, container, false)
         shimmerView = root.shimmer_view_container
@@ -69,7 +63,6 @@ class SearchFragment : Fragment() {
             shimmerView.visibility = View.GONE
         }
 
-        //TODO: vehicle list recyclerview should only get the list one time only, except user refresh (refresh layout click tab again) or filter
 
         searchViewModel.getVehicleList().observe(viewLifecycleOwner, vehicleListUpdateObserver)
 
@@ -77,6 +70,34 @@ class SearchFragment : Fragment() {
         fab.setOnClickListener {
             Toast.makeText(context, "filter", Toast.LENGTH_SHORT).show()
             findNavController().navigate(R.id.action_searchFragment2_to_vehicleFilterFragment)
+
+
+
+//            val asd = FirestoreRepository()
+//            asd.fireStoreDB.runBatch { batch ->
+//                for (vehicle in vehicleList) {
+
+//                    val mpg = ThreadLocalRandom.current().nextInt(20, 51)
+//                    val transmissionList = arrayOf("at" , "mt")
+//                    val transmission = transmissionList[ThreadLocalRandom.current().nextInt(0, 2)]
+//                    val trip = ThreadLocalRandom.current().nextInt(20, 100)
+//                    val rating = ThreadLocalRandom.current().nextInt(375, 500) / 100.toDouble()
+
+//                    val charPool : List<Char> = ('A'..'Z').toList()
+//                    val randomString = (1..2)
+//                        .map { i -> kotlin.random.Random.nextInt(0, charPool.size) }
+//                        .map(charPool::get)
+//                        .joinToString("")
+//
+//                    val randomNumber = String.format("%04d", ThreadLocalRandom.current().nextInt(1000, 10000))
+//                    vehicle.licenseplate = "W$randomString$randomNumber"
+//
+//                    val ref = asd.vehicleList().document(vehicle.id)
+//                    batch.set(ref, vehicle)
+//                }
+//            }.addOnSuccessListener {
+//                Toast.makeText(context, "BATCH WRITE SUCCESS", Toast.LENGTH_SHORT).show()
+//            }
         }
 
 

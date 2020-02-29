@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/searchFragment2"
         android:name="com.fhanjacson.amca.wheels.ui.search.SearchFragment"
-        android:label="Search" >
+        android:label="@string/text_search" >
         <action
             android:id="@+id/action_searchFragment2_to_vehicleFilterFragment"
             app:destination="@id/vehicleFilterFragment"
@@ -21,38 +21,47 @@
     <fragment
         android:id="@+id/vehicleFilterFragment"
         android:name="com.fhanjacson.amca.wheels.ui.vehiclefilter.VehicleFilterFragment"
-        android:label="Filter"
+        android:label="@string/text_filter"
         tools:layout="@layout/fragment_vehicle_filter" />
     <fragment
         android:id="@+id/vehicleDetailFragment"
         android:name="com.fhanjacson.amca.wheels.ui.vehicledetail.VehicleDetailFragment"
-        android:label="Vehicle Detail"
+        android:label="@string/text_vehicle_detail"
         tools:layout="@layout/vehicle_detail_fragment" >
         <action
             android:id="@+id/action_vehicleDetailFragment_to_checkoutFragment"
             app:destination="@id/checkoutFragment" />
         <action
-            android:id="@+id/action_vehicleDetailFragment_to_getStartedFragment"
-            app:destination="@id/getStartedFragment" />
+            android:id="@+id/action_vehicleDetailFragment_to_onboardingFragment3"
+            app:destination="@id/onboardingFragment3" />
+        <argument
+            android:name="vehicleDetail"
+            app:argType="com.fhanjacson.amca.wheels.model.Vehicle" />
     </fragment>
     <fragment
         android:id="@+id/checkoutFragment"
         android:name="com.fhanjacson.amca.wheels.ui.checkout.CheckoutFragment"
-        android:label="Checkout"
-        tools:layout="@layout/checkout_fragment" />
+        android:label="@string/text_checkout"
+        tools:layout="@layout/checkout_fragment" >
+        <argument
+            android:name="vehicle"
+            app:argType="com.fhanjacson.amca.wheels.model.Vehicle" />
+        <action
+            android:id="@+id/action_checkoutFragment_to_paymentFragment"
+            app:destination="@id/paymentFragment" />
+    </fragment>
     <fragment
         android:id="@+id/onboardingFragment3"
         android:name="com.fhanjacson.amca.wheels.ui.onboarding.OnboardingFragment"
         android:label="@string/text_login_or_signup"
         tools:layout="@layout/fragment_onboarding" />
     <fragment
-        android:id="@+id/getStartedFragment"
-        android:name="com.fhanjacson.amca.wheels.ui.onboarding.GetStartedFragment"
-        android:label="Get Started"
-        tools:layout="@layout/fragment_get_started" >
-        <action
-            android:id="@+id/action_getStartedFragment_to_onboardingFragment3"
-            app:destination="@id/onboardingFragment3"
-            app:popUpTo="@+id/vehicleDetailFragment" />
+        android:id="@+id/paymentFragment"
+        android:name="com.fhanjacson.amca.wheels.ui.paymentconfirmation.PaymentConfirmationFragment"
+        android:label="@string/text_payment"
+        tools:layout="@layout/paymentconfirmation_fragment" >
+        <argument
+            android:name="booking"
+            app:argType="com.fhanjacson.amca.wheels.model.Booking" />
     </fragment>
 </navigation>

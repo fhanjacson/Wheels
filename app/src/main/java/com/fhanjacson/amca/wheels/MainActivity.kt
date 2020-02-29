@@ -1,6 +1,7 @@
 package com.fhanjacson.amca.wheels
 
 import android.os.Bundle
+import android.util.Log
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.LiveData
@@ -30,8 +31,21 @@ class MainActivity : AppCompatActivity() {
         setupBottomNavigationBar()
     }
 
+//        TODO: vehicle list recyclerview should only get the list one time only, except user refresh (refresh layout click tab again) or filter
+//        TODO: Pagination
+//        TODO: Filter
+//        TODO: Activities
+//        TODO: Profile
 
+    override fun onResume() {
+        super.onResume()
+        Log.d(Constant.LOG_TAG, "TODO: vehicle list recyclerview should only get the list one time only, except user refresh (refresh layout click tab again) or filter")
+        Log.d(Constant.LOG_TAG, "TODO: Pagination")
+        Log.d(Constant.LOG_TAG, "TODO: Filter")
+        Log.d(Constant.LOG_TAG, "TODO: Activities")
+        Log.d(Constant.LOG_TAG, "TODO: Profile")
 
+    }
 
     /**
      * Called on first creation and when restoring state.
@@ -41,7 +55,6 @@ class MainActivity : AppCompatActivity() {
 
         val navGraphIds = listOf(R.navigation.search_navigation, R.navigation.activity_navigation, R.navigation.account_navigation)
 
-        // Setup the bottom navigation view with a list of navigation graphs
         val controller = bottomNavigationView.setupWithNavController(
             navGraphIds = navGraphIds,
             fragmentManager = supportFragmentManager,

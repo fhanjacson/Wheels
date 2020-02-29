@@ -1,13 +1,9 @@
 package com.fhanjacson.amca.wheels.ui.search
 
-import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.fhanjacson.amca.wheels.Constant
 import com.fhanjacson.amca.wheels.R
 import com.fhanjacson.amca.wheels.base.GlideApp
 import com.fhanjacson.amca.wheels.model.Vehicle
@@ -44,7 +40,7 @@ class VehicleListAdapter(private val vehicleList: List<Vehicle>) :
             vehicleList[position].model
         )
         holder.vehiclePrice.text = holder.itemView.context.getString(
-            R.string.text_currenct_short,
+            R.string.text_currency_price_short,
             vehicleList[position].price.toString()
         )
         GlideApp.with(holder.itemView.context)
@@ -53,7 +49,8 @@ class VehicleListAdapter(private val vehicleList: List<Vehicle>) :
 
 
         holder.itemView.setOnClickListener{ view ->
-            view.findNavController().navigate(R.id.action_searchFragment2_to_vehicleDetailFragment)
+            val action = SearchFragmentDirections.actionSearchFragment2ToVehicleDetailFragment(vehicleList[position])
+            view.findNavController().navigate(action)
         }
     }
 

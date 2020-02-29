@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/activityFragment2"
         android:name="com.fhanjacson.amca.wheels.ui.activity.ActivityFragment"
-        android:label="Activities" >
+        android:label="@string/text_activities" >
         <action
             android:id="@+id/action_activityFragment2_to_onboardingFragment"
             app:destination="@id/onboardingFragment" />

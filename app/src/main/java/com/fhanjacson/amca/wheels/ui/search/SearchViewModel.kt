@@ -70,7 +70,7 @@ class SearchViewModel : ViewModel() {
    fun getVehicleList() : LiveData<List<Vehicle>> {
        Log.d(Constant.LOG_TAG, "getVehicleList")
 
-       firebaseRepository.vehicleList().get().addOnSuccessListener { docs ->
+       firebaseRepository.getVehicleList().addOnSuccessListener { docs ->
            val vehicleList: MutableList<Vehicle> = mutableListOf()
            for (doc in docs) {
                val vehicle = doc.toObject(Vehicle::class.java)

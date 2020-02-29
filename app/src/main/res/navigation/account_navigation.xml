@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/accountFragment2"
         android:name="com.fhanjacson.amca.wheels.ui.account.AccountFragment"
-        android:label="Account" >
+        android:label="@string/text_account" >
         <action
             android:id="@+id/action_accountFragment2_to_onboardingFragment2"
             app:destination="@id/onboardingFragment2" />
