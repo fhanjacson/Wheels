@@ -15,7 +15,10 @@ import com.facebook.shimmer.ShimmerFrameLayout
 import com.fhanjacson.amca.wheels.R
 import com.fhanjacson.amca.wheels.model.Vehicle
 import com.fhanjacson.amca.wheels.repository.FirestoreRepository
+import com.google.firebase.firestore.GeoPoint
 import kotlinx.android.synthetic.main.fragment_search.view.*
+import java.math.RoundingMode
+import java.text.DecimalFormat
 import java.util.*
 import java.util.concurrent.ThreadLocalRandom
 
@@ -48,7 +51,6 @@ class SearchFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
 
-
         val vehicleListUpdateObserver = Observer<List<Vehicle>> {
             vehicleList = it
             viewManager = LinearLayoutManager(context)
@@ -64,19 +66,37 @@ class SearchFragment : Fragment() {
         }
 
 
-        searchViewModel.getVehicleList().observe(viewLifecycleOwner, vehicleListUpdateObserver)
+//        searchViewModel.getVehicleList().observe(viewLifecycleOwner, vehicleListUpdateObserver)
+        searchViewModel.mVehicleList.observe(viewLifecycleOwner, vehicleListUpdateObserver)
 
         val fab = view.filterFAB
         fab.setOnClickListener {
-            Toast.makeText(context, "filter", Toast.LENGTH_SHORT).show()
-            findNavController().navigate(R.id.action_searchFragment2_to_vehicleFilterFragment)
+                        findNavController().navigate(R.id.action_searchFragment2_to_vehicleFilterFragment)
 
+
+
+
+
+//            Toast.makeText(context, "$randomLat:$randomLon", Toast.LENGTH_SHORT).show()
 
 
 //            val asd = FirestoreRepository()
 //            asd.fireStoreDB.runBatch { batch ->
 //                for (vehicle in vehicleList) {
-
+//
+//                    val df = DecimalFormat("#.#######")
+//                    df.roundingMode = RoundingMode.CEILING
+//
+//                    val lat = 3.0586745
+//                    val lon = 101.6917068
+//
+//                    val minusorplus1 = if (ThreadLocalRandom.current().nextInt(0, 2) == 1) -1 else 1
+//                    val minusorplus2 = if (ThreadLocalRandom.current().nextInt(0, 2) == 1) -1 else 1
+//
+//                    val randomLat = df.format(
+//                        lat + (ThreadLocalRandom.current().nextInt(10, 500000) / 10000000.0 * minusorplus1)).toDouble()
+//                    val randomLon = df.format(
+//                        lon + (ThreadLocalRandom.current().nextInt(10, 500000) / 10000000.0 * minusorplus2)).toDouble()
 //                    val mpg = ThreadLocalRandom.current().nextInt(20, 51)
 //                    val transmissionList = arrayOf("at" , "mt")
 //                    val transmission = transmissionList[ThreadLocalRandom.current().nextInt(0, 2)]
@@ -92,12 +112,17 @@ class SearchFragment : Fragment() {
 //                    val randomNumber = String.format("%04d", ThreadLocalRandom.current().nextInt(1000, 10000))
 //                    vehicle.licenseplate = "W$randomString$randomNumber"
 //
+//                    val geo = GeoPoint(randomLat, randomLon)
+//
+//                    vehicle.location = geo
+//
 //                    val ref = asd.vehicleList().document(vehicle.id)
 //                    batch.set(ref, vehicle)
 //                }
 //            }.addOnSuccessListener {
 //                Toast.makeText(context, "BATCH WRITE SUCCESS", Toast.LENGTH_SHORT).show()
 //            }
+
         }
 
 

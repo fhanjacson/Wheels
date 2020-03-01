@@ -15,6 +15,14 @@ class SearchViewModel : ViewModel() {
     var firebaseRepository = FirestoreRepository()
     var vehicles: MutableLiveData<List<Vehicle>> = MutableLiveData()
 
+    var query = firebaseRepository.vehicleList().whereIn("brand", mutableListOf("TOYOTA", "PERODUA"))
+
+    var mVehicleList = firebaseRepository.getVehicleList(query)
+
+    var filterTypeList = mutableListOf<String>()
+    var filterBrandList = mutableListOf<String>()
+    var filterTranmissionList = mutableListOf<String>()
+
     fun getRealTimeVehicleList() : LiveData<List<Vehicle>> {
         Log.d(Constant.LOG_TAG, "SearchViewModel getRealTimeVehicleList")
 

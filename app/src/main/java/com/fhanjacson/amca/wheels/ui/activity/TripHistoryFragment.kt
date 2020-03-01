@@ -47,21 +47,19 @@ class TripHistoryFragment : Fragment() {
         fview = view
 
         if (auth.currentUser != null) {
-            setupRecyclerView()
             viewmodel.bookingList.observe(viewLifecycleOwner, Observer {
-                Log.d(Constant.LOG_TAG, "bookingList.observe")
-                tripRecyclerview.adapter = TripAdapter(it)
+                setupRecyclerView(it)
             })
         } else {
             Toast.makeText(context, "You're not logged in", Toast.LENGTH_LONG).show()
         }
     }
 
-    private fun setupRecyclerView() {
+    private fun setupRecyclerView(tripList: List<BookingResponse>) {
         Log.d(Constant.LOG_TAG, "TripHistoryFragment:setupRecyclerView")
         val user = auth.currentUser
         if (user != null) {
-            tripAdapter = TripAdapter(emptyTrip)
+            tripAdapter = TripAdapter(tripList)
             tripRecyclerview = fview.triphistoryRecyclerview.apply {
                 setHasFixedSize(true)
                 layoutManager = LinearLayoutManager(context)

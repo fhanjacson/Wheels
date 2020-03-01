@@ -1,5 +1,6 @@
 package com.fhanjacson.amca.wheels.model
 
+import com.google.firebase.firestore.GeoPoint
 import java.io.Serializable
 
 class Vehicle : Serializable {
@@ -15,6 +16,7 @@ class Vehicle : Serializable {
     var trip: Int = 0
     var rating: Double = 0.toDouble()
     lateinit var licenseplate: String
+    lateinit var location: GeoPoint
 
 
 

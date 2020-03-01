@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="vehicle_brands">
+        <item>ALFA ROMEO</item>
+        <item>BMW</item>
+        <item>FORD</item>
+        <item>HONDA</item>
+        <item>HYUNDAI</item>
+        <item>JEEP</item>
+        <item>KIA</item>
+        <item>LEXUS</item>
+        <item>MITSUBISHI</item>
+        <item>NISSAN</item>
+        <item>PERODUA</item>
+        <item>PROTON</item>
+        <item>TOYOTA</item>
+        <item>VOLKSWAGEN</item>
+    </string-array>
+    <string-array name="vehicle_transmissions">
+        <item name="at">AT</item>
+        <item name="mt">MT</item>
+    </string-array>
+    <string-array name="vehicle_types">
+        <item name="sedan">Sedan</item>
+        <item name="suv">SUV</item>
+        <item name="van">VAN</item>
+        <item name="pickup">Pickup</item>
+        <item name="jeep">Jeep</item>
+    </string-array>
+</resources>

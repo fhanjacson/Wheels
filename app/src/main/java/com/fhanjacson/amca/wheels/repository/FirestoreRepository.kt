@@ -27,6 +27,20 @@ class FirestoreRepository {
         return vehicleList().get()
     }
 
+    fun getVehicleList(query: Query) :  MutableLiveData<List<Vehicle>> {
+        val data = MutableLiveData<List<Vehicle>>()
+        query.get().addOnSuccessListener {docs ->
+            val mVehicleList = mutableListOf<Vehicle>()
+            for (doc in docs) {
+                val vehicle = doc.toObject(Vehicle::class.java)
+                vehicle.id = doc.id
+                mVehicleList.add(vehicle)
+            }
+            data.value = mVehicleList
+        }
+        return data
+    }
+
     fun addBooking(booking: Booking): Task<DocumentReference> {
         return tripList().add(booking)
     }
