@@ -131,8 +131,8 @@ class VehicleDetailFragment : Fragment() {
             if (user != null) {
 //                findNavController().navigate(R.id.action_vehicleDetailFragment_to_checkoutFragment)
 //                val booking = Booking()
-//                booking.vehicleid = vehicleDetail.id
-//                checkoutViewModel.booking.vehicleid = vehicleDetail.id
+//                booking.vehicleID = vehicleDetail.id
+//                checkoutViewModel.booking.vehicleID = vehicleDetail.id
 //                checkoutViewModel.updateBooking(booking)
 
                 val action = VehicleDetailFragmentDirections.actionVehicleDetailFragmentToCheckoutFragment(vehicleDetail)

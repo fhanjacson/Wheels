@@ -15,6 +15,8 @@
     <string name="title_onboarding">Onboarding</string>
     <string name="text_vehicle_primary_name">%1$s %2$s</string>
     <string name="text_currency_price_short">MYR %1$s</string>
+    <string name="text_checkout_total_singular">MYR %1$s (%2$s day)</string>
+    <string name="text_checkout_total_plural">MYR %1$s (%2$s days)</string>
     <string name="text_per_day">per day</string>
     <string name="text_placeholder_location">Bukit Damansara, Kuala Lumpur</string>
     <string name="text_placeholder_price">MYR 300</string>
@@ -48,5 +50,8 @@
     <string name="text_vehicle_transmission_at">AT</string>
     <string name="text_vehicle_transmission_mt">MT</string>
     <string name="text_vehicle_mpg">%d MPG</string>
+    <string name="text_selecte_date_first">Select date first</string>
+    <string name="text_trip_id">Trip ID: %s</string>
+    <string name="text_trip_booked_on">Trip booked on %s</string>
 
 </resources>

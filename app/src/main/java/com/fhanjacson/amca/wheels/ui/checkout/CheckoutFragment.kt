@@ -14,6 +14,7 @@ import androidx.navigation.fragment.navArgs
 import com.fhanjacson.amca.wheels.Constant
 
 import com.fhanjacson.amca.wheels.R
+import com.fhanjacson.amca.wheels.base.GlideApp
 import com.fhanjacson.amca.wheels.model.Vehicle
 import com.fhanjacson.amca.wheels.repository.FirestoreRepository
 import com.google.android.material.datepicker.CalendarConstraints
@@ -21,6 +22,7 @@ import com.google.android.material.datepicker.DateValidatorPointForward
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.storage.FirebaseStorage
 import kotlinx.android.synthetic.main.checkout_fragment.*
 import kotlinx.android.synthetic.main.checkout_fragment.view.*
 import java.text.SimpleDateFormat
@@ -39,6 +41,7 @@ class CheckoutFragment : Fragment() {
     lateinit var selectedVehicle: Vehicle
     private val args by navArgs<CheckoutFragmentArgs>()
     private var totalPrice = 0
+    var storage = FirebaseStorage.getInstance()
 
 
     override fun onCreateView(
@@ -50,7 +53,7 @@ class CheckoutFragment : Fragment() {
         repo = FirestoreRepository()
         auth = FirebaseAuth.getInstance()
         changeDateButton = root.changeDateButton
-        viewmodel = ViewModelProvider(this).get(CheckoutViewModel::class.java)
+        viewmodel = ViewModelProvider(requireActivity()).get(CheckoutViewModel::class.java)
         return root
     }
 
@@ -59,15 +62,40 @@ class CheckoutFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         viewCheckout = view
         selectedVehicle = args.vehicle
-        viewmodel.booking.vehicleid = selectedVehicle.id
+        viewmodel.booking.vehicleID = selectedVehicle.id
+        viewmodel.booking.vehicleName = getString(
+            R.string.text_vehicle_primary_name,
+            selectedVehicle.brand,
+            selectedVehicle.model
+        )
+        viewmodel.selectedVehicle = selectedVehicle
 
 
-        if (viewmodel.booking.startdate.toDate().time == 0.toLong() || viewmodel.booking.enddate.toDate().time == 0.toLong()) {
-            view.startdate_text.text = "Select date first"
-            view.enddate_text.text = "Select date first"
-            view.totalprice_text.text = view.context.getString(R.string.text_currency_price_short, viewmodel.booking.totalprice.toString())
+        GlideApp.with(view.context)
+            .load(storage.getReferenceFromUrl(selectedVehicle.images[0]))
+            .into(view.vehiclepreview_image)
+        view.vehiclename_text.text = getString(
+            R.string.text_vehicle_primary_name,
+            selectedVehicle.brand,
+            selectedVehicle.model
+        )
+        view.vehicleprice_text.text = view.context.getString(
+            R.string.text_currency_price_short,
+            selectedVehicle.price.toString()
+        )
+
+
+
+
+        if (viewmodel.booking.startDate.toDate().time == 0.toLong() || viewmodel.booking.endDate.toDate().time == 0.toLong()) {
+            view.startdate_text.text = getString(R.string.text_selecte_date_first)
+            view.enddate_text.text = getString(R.string.text_selecte_date_first)
+            view.totalprice_text.text = getString(
+                R.string.text_currency_price_short,
+                viewmodel.booking.totalPrice.toString()
+            )
         } else {
-           updateDateUI()
+            updateDateUI()
         }
 
         setupMaterialDateRangePicker()
@@ -75,7 +103,7 @@ class CheckoutFragment : Fragment() {
 
         val user = auth.currentUser
         if (user != null) {
-            viewmodel.booking.userid = user.uid
+            viewmodel.booking.userID = user.uid
         }
 
         changeDateButton.setOnClickListener {
@@ -83,10 +111,10 @@ class CheckoutFragment : Fragment() {
         }
 
         proceed_button.setOnClickListener {
-            if (viewmodel.booking.totalDay > 0 && viewmodel.booking.totalprice > 0) {
-//               pay()
-                findNavController().navigate(R.id.action_checkoutFragment_to_paymentFragment)
-
+            if (viewmodel.booking.totalDay > 0 && viewmodel.booking.totalPrice > 0) {
+                pay()
+            } else {
+                Toast.makeText(context, "Please set the trip dates", Toast.LENGTH_LONG).show()
             }
         }
 
@@ -119,27 +147,54 @@ class CheckoutFragment : Fragment() {
                 Constant.LOG_TAG,
                 "Date String = ${materialDatePicker.headerText}::  Date epoch values::${it.first}:: to :: ${it.second}"
             )
-            viewmodel.booking.startdate = Timestamp(Date(it.first!!))
-            viewmodel.booking.enddate = Timestamp(Date(it.second!!))
-            val dayDiff = viewmodel.booking.enddate.toDate().time - viewmodel.booking.startdate.toDate().time
-            viewmodel.booking.totalDay = TimeUnit.DAYS.convert(dayDiff, TimeUnit.MILLISECONDS).toInt() + 1
-            viewmodel.booking.totalprice = selectedVehicle.price * viewmodel.booking.totalDay
-            Log.d(Constant.LOG_TAG, "diff:  ${TimeUnit.DAYS.convert(dayDiff, TimeUnit.MILLISECONDS).toInt() + 1} days")
+            viewmodel.booking.startDate = Timestamp(Date(it.first!!))
+            viewmodel.booking.endDate = Timestamp(Date(it.second!!))
+            val dayDiff =
+                viewmodel.booking.endDate.toDate().time - viewmodel.booking.startDate.toDate().time
+            viewmodel.booking.totalDay =
+                TimeUnit.DAYS.convert(dayDiff, TimeUnit.MILLISECONDS).toInt() + 1
+            viewmodel.booking.totalPrice =
+                viewmodel.selectedVehicle.price * viewmodel.booking.totalDay
+            Log.d(
+                Constant.LOG_TAG,
+                "diff:  ${TimeUnit.DAYS.convert(dayDiff, TimeUnit.MILLISECONDS).toInt() + 1} days"
+            )
             updateDateUI()
         }
     }
 
     private fun updateDateUI() {
-        val sdf = SimpleDateFormat("E, d MMMM YYYY", Locale.getDefault())
-        viewCheckout.startdate_text.text = sdf.format(viewmodel.booking.startdate.toDate())
-        viewCheckout.enddate_text.text = sdf.format(viewmodel.booking.enddate.toDate())
-        viewCheckout.totalprice_text.text = viewCheckout.context.getString(R.string.text_currency_price_short, viewmodel.booking.totalprice.toString())
+        val sdf = SimpleDateFormat(Constant.DATE_FORMAT_PATTERN_WITH_DAY, Locale.getDefault())
+        viewCheckout.startdate_text.text = sdf.format(viewmodel.booking.startDate.toDate())
+        viewCheckout.enddate_text.text = sdf.format(viewmodel.booking.endDate.toDate())
+        if (viewmodel.booking.totalDay > 1) {
+            viewCheckout.totalprice_text.text = viewCheckout.context.getString(
+                R.string.text_checkout_total_plural,
+                viewmodel.booking.totalPrice.toString(),
+                viewmodel.booking.totalDay.toString()
+            )
+        } else {
+            viewCheckout.totalprice_text.text = viewCheckout.context.getString(
+                R.string.text_checkout_total_singular,
+                viewmodel.booking.totalPrice.toString(),
+                viewmodel.booking.totalDay.toString()
+            )
+        }
     }
 
     private fun pay() {
+        viewmodel.booking.bookingDate = Timestamp(Date())
         repo.addBooking(viewmodel.booking).addOnSuccessListener {
-            Toast.makeText(context, "Add document success! ${it.id}", Toast.LENGTH_SHORT).show()
+            viewmodel.bookingid = it.id
             findNavController().navigate(R.id.action_checkoutFragment_to_paymentFragment)
+
+//            it.get().addOnSuccessListener { doc ->
+//                val mBooking = doc.toObject(Booking::class.java)
+//                if (mBooking != null) {
+//                    viewmodel.booking = mBooking
+//                    Toast.makeText(context, "Add document success! ${it.id}", Toast.LENGTH_SHORT).show()
+//                }
+//            }
         }
     }
 

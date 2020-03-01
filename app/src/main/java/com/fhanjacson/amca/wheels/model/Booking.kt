@@ -5,12 +5,14 @@ import com.google.firebase.firestore.FieldValue
 import java.io.Serializable
 import java.util.*
 
-class Booking : Serializable {
-    lateinit var userid: String
-    lateinit var vehicleid: String
-    var startdate: Timestamp = Timestamp(Date(0))
-    var enddate: Timestamp = Timestamp(Date(0))
-    var totalprice: Double = 0.toDouble()
+open class Booking : Serializable {
+//    lateinit var id: String
+    lateinit var userID: String
+    lateinit var vehicleID: String
+    var startDate: Timestamp = Timestamp(Date(0))
+    var endDate: Timestamp = Timestamp(Date(0))
+    var totalPrice: Double = 0.toDouble()
     var totalDay = 0
-    var timestamp = FieldValue.serverTimestamp()
+    var bookingDate = Timestamp(Date(0))
+    lateinit var vehicleName: String
 }

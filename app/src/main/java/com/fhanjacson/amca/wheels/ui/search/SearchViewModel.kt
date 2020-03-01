@@ -12,38 +12,8 @@ import com.google.firebase.firestore.QuerySnapshot
 
 class SearchViewModel : ViewModel() {
 
-    lateinit var vehiclestest : MutableList<Vehicle>
-
     var firebaseRepository = FirestoreRepository()
     var vehicles: MutableLiveData<List<Vehicle>> = MutableLiveData()
-
-
-
-
-    fun getVehicleListtest(): MutableList<Vehicle> {
-        return vehiclestest
-    }
-
-    fun getVehicleListFromFirestore() {
-        firebaseRepository.vehicleList().get().addOnSuccessListener { documents ->
-            if (documents != null) {
-                val vehicletemp = mutableListOf<Vehicle>()
-                for (doc in documents) {
-                    val vehicle = doc.toObject(Vehicle::class.java)
-                    vehicle.id = doc.id
-                    vehicletemp.add(vehicle)
-                }
-                vehiclestest = vehicletemp
-            }
-        }
-    }
-
-
-
-
-
-
-
 
     fun getRealTimeVehicleList() : LiveData<List<Vehicle>> {
         Log.d(Constant.LOG_TAG, "SearchViewModel getRealTimeVehicleList")
@@ -78,7 +48,6 @@ class SearchViewModel : ViewModel() {
                vehicleList.add(vehicle)
            }
            vehicles.value = vehicleList
-           vehiclestest = vehicleList
        }
 
        return vehicles

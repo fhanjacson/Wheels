@@ -7,15 +7,15 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.navigation.NavController
-import androidx.navigation.findNavController
-import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
-import androidx.navigation.ui.setupWithNavController
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
+
     private lateinit var currentNavController: LiveData<NavController>
+    lateinit var bottomNavigationView: BottomNavigationView
+    lateinit var navGraphIds: List<Int>
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,7 +39,10 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        Log.d(Constant.LOG_TAG, "TODO: vehicle list recyclerview should only get the list one time only, except user refresh (refresh layout click tab again) or filter")
+        Log.d(
+            Constant.LOG_TAG,
+            "TODO: vehicle list recyclerview should only get the list one time only, except user refresh (refresh layout click tab again) or filter"
+        )
         Log.d(Constant.LOG_TAG, "TODO: Pagination")
         Log.d(Constant.LOG_TAG, "TODO: Filter")
         Log.d(Constant.LOG_TAG, "TODO: Activities")
@@ -51,9 +54,13 @@ class MainActivity : AppCompatActivity() {
      * Called on first creation and when restoring state.
      */
     private fun setupBottomNavigationBar() {
-        val bottomNavigationView = findViewById<BottomNavigationView>(R.id.nav_view)
+        bottomNavigationView = nav_view
 
-        val navGraphIds = listOf(R.navigation.search_navigation, R.navigation.activity_navigation, R.navigation.account_navigation)
+        navGraphIds = listOf(
+            R.navigation.search_navigation,
+            R.navigation.activity_navigation,
+            R.navigation.account_navigation
+        )
 
         val controller = bottomNavigationView.setupWithNavController(
             navGraphIds = navGraphIds,
@@ -72,4 +79,12 @@ class MainActivity : AppCompatActivity() {
     override fun onSupportNavigateUp(): Boolean {
         return currentNavController.value?.navigateUp() ?: false
     }
+
+    fun setBottomNavBarIndex(navResource: Int) {
+        Log.d(Constant.LOG_TAG, "setBottomNavBarIndex")
+//        bottomNavigationView.selectedItemId = navGraphIds.indexOf(navResource)
+        bottomNavigationView.selectedItemId = navResource
+
+    }
+
 }

@@ -16,6 +16,9 @@ class Constant {
         const val VEHICLE_TRANSMISSION_AT = "at"
         const val VEHICLE_TRANSMISSION_MT = "mt"
 
+        const val DATE_FORMAT_PATTERN_WITH_DAY = "E, d MMMM YYYY"
+        const val DATE_FORMAT_PATTERN_WITH_TIME = "dd MMMM YYYY HH:mm:ss"
+
 
 
     }
