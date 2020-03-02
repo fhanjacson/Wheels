@@ -42,6 +42,7 @@
     <string name="text_proceed">PROCEED</string>
     <string name="text_vehicle_rating">%s★ (%s trips)</string>
     <string name="text_vehicle_type_sedan">Sedan</string>
+    <string name="text_vehicle_type_hatchback">Hatchback</string>
     <string name="text_vehicle_type_suv">SUV</string>
     <string name="text_vehicle_type_van">VAN</string>
     <string name="text_vehicle_type_pickup">Pickup</string>
@@ -54,5 +55,9 @@
     <string name="text_trip_id">Trip ID: %s</string>
     <string name="text_trip_booked_on">Trip booked on %s</string>
 
+
+    <string name="text_filter_all_types">All Types</string>
+    <string name="text_filter_all_brands">All Brands</string>
+    <string name="text_filter_all_transmissions">All Transmissions</string>
 
 </resources>

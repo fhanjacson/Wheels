@@ -1,6 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string-array name="vehicle_types">
+        <item>@string/text_filter_all_types</item>
+        <item name="sedan">Sedan</item>
+        <item name="hatchback">Hatchback</item>
+        <item name="suv">SUV</item>
+        <item name="van">VAN</item>
+        <item name="pickup">Pickup</item>
+        <item name="jeep">Jeep</item>
+    </string-array>
     <string-array name="vehicle_brands">
+        <item>@string/text_filter_all_brands</item>
         <item>ALFA ROMEO</item>
         <item>BMW</item>
         <item>FORD</item>
@@ -17,14 +27,9 @@
         <item>VOLKSWAGEN</item>
     </string-array>
     <string-array name="vehicle_transmissions">
+        <item>@string/text_filter_all_transmissions</item>
         <item name="at">AT</item>
         <item name="mt">MT</item>
     </string-array>
-    <string-array name="vehicle_types">
-        <item name="sedan">Sedan</item>
-        <item name="suv">SUV</item>
-        <item name="van">VAN</item>
-        <item name="pickup">Pickup</item>
-        <item name="jeep">Jeep</item>
-    </string-array>
+
 </resources>

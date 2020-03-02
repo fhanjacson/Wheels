@@ -85,6 +85,11 @@ class VehicleDetailFragment : Fragment() {
                 view.feature1_image.setImageResource(R.drawable.sedan)
             }
 
+            Constant.VEHICLE_TYPE_HATCHBACK -> {
+                view.feature1_text.text = getString(R.string.text_vehicle_type_hatchback)
+                view.feature1_image.setImageResource(R.drawable.hatchback)
+            }
+
             Constant.VEHICLE_TYPE_SUV -> {
                 view.feature1_text.text = getString(R.string.text_vehicle_type_suv)
                 view.feature1_image.setImageResource(R.drawable.suv)

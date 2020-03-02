@@ -13,7 +13,6 @@ import java.util.ArrayList
 class FirestoreRepository {
     val TAG = "FIREBASE_REPOSITORY"
     var fireStoreDB = FirebaseFirestore.getInstance()
-//    var user = FirebaseAuth.getInstance().currentUser
 
     fun vehicleList(): CollectionReference {
         return fireStoreDB.collection("vehicleList")
@@ -23,13 +22,24 @@ class FirestoreRepository {
         return fireStoreDB.collection("tripList")
     }
 
-    fun getVehicleList(): Task<QuerySnapshot> {
-        return vehicleList().get()
+    fun getVehicleList(): MutableLiveData<List<Vehicle>> {
+        val data = MutableLiveData<List<Vehicle>>()
+        vehicleList().get().addOnSuccessListener { docs ->
+            val mVehicleList = mutableListOf<Vehicle>()
+            for (doc in docs) {
+                val vehicle = doc.toObject(Vehicle::class.java)
+                vehicle.id = doc.id
+                mVehicleList.add(vehicle)
+            }
+            data.value = mVehicleList
+        }
+        return data
     }
 
-    fun getVehicleList(query: Query) :  MutableLiveData<List<Vehicle>> {
+
+    fun getVehicleList(query: Query): MutableLiveData<List<Vehicle>> {
         val data = MutableLiveData<List<Vehicle>>()
-        query.get().addOnSuccessListener {docs ->
+        query.get().addOnSuccessListener { docs ->
             val mVehicleList = mutableListOf<Vehicle>()
             for (doc in docs) {
                 val vehicle = doc.toObject(Vehicle::class.java)
@@ -53,7 +63,7 @@ class FirestoreRepository {
         Log.d(Constant.LOG_TAG, "FirestoreRepository:getTripList")
 
         val data = MutableLiveData<List<BookingResponse>>()
-        query.addSnapshotListener{ docs, e ->
+        query.addSnapshotListener { docs, e ->
             val mTripList = mutableListOf<BookingResponse>()
             if (e != null) {
                 Log.d(Constant.LOG_TAG, e.toString())

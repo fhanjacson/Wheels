@@ -12,15 +12,11 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.facebook.shimmer.ShimmerFrameLayout
+import com.fhanjacson.amca.wheels.Constant
 import com.fhanjacson.amca.wheels.R
 import com.fhanjacson.amca.wheels.model.Vehicle
 import com.fhanjacson.amca.wheels.repository.FirestoreRepository
-import com.google.firebase.firestore.GeoPoint
 import kotlinx.android.synthetic.main.fragment_search.view.*
-import java.math.RoundingMode
-import java.text.DecimalFormat
-import java.util.*
-import java.util.concurrent.ThreadLocalRandom
 
 
 class SearchFragment : Fragment() {
@@ -29,8 +25,8 @@ class SearchFragment : Fragment() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var viewAdapter: RecyclerView.Adapter<*>
     private lateinit var viewManager: RecyclerView.LayoutManager
-    private lateinit var vehicleList: List<Vehicle>
     private lateinit var shimmerView: ShimmerFrameLayout
+    private lateinit var xvehicleList: List<Vehicle>
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -38,11 +34,9 @@ class SearchFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        searchViewModel = ViewModelProvider(this).get(SearchViewModel::class.java)
+        searchViewModel = ViewModelProvider(requireActivity()).get(SearchViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_search, container, false)
         shimmerView = root.shimmer_view_container
-
-
 
         return root
     }
@@ -52,7 +46,8 @@ class SearchFragment : Fragment() {
 
 
         val vehicleListUpdateObserver = Observer<List<Vehicle>> {
-            vehicleList = it
+            val vehicleList: List<Vehicle> = it
+            xvehicleList = it
             viewManager = LinearLayoutManager(context)
             viewAdapter = VehicleListAdapter(vehicleList)
             recyclerView = view.vehicleRecyclerview.apply {
@@ -67,14 +62,11 @@ class SearchFragment : Fragment() {
 
 
 //        searchViewModel.getVehicleList().observe(viewLifecycleOwner, vehicleListUpdateObserver)
-        searchViewModel.mVehicleList.observe(viewLifecycleOwner, vehicleListUpdateObserver)
+        searchViewModel.vehicleList.observe(viewLifecycleOwner, vehicleListUpdateObserver)
 
         val fab = view.filterFAB
         fab.setOnClickListener {
-                        findNavController().navigate(R.id.action_searchFragment2_to_vehicleFilterFragment)
-
-
-
+            findNavController().navigate(R.id.action_searchFragment2_to_vehicleFilterFragment)
 
 
 //            Toast.makeText(context, "$randomLat:$randomLon", Toast.LENGTH_SHORT).show()
@@ -82,7 +74,15 @@ class SearchFragment : Fragment() {
 
 //            val asd = FirestoreRepository()
 //            asd.fireStoreDB.runBatch { batch ->
-//                for (vehicle in vehicleList) {
+//                for (vehicle in xvehicleList) {
+
+//                    when(vehicle.type) {
+//                        Constant.VEHICLE_TYPE_HATCHBACK -> vehicle.seat = 5
+//                        Constant.VEHICLE_TYPE_SUV -> vehicle.seat = 7
+//                        Constant.VEHICLE_TYPE_VAN -> vehicle.seat = 8
+//                    }
+
+
 //
 //                    val df = DecimalFormat("#.#######")
 //                    df.roundingMode = RoundingMode.CEILING
@@ -115,7 +115,8 @@ class SearchFragment : Fragment() {
 //                    val geo = GeoPoint(randomLat, randomLon)
 //
 //                    vehicle.location = geo
-//
+
+
 //                    val ref = asd.vehicleList().document(vehicle.id)
 //                    batch.set(ref, vehicle)
 //                }
@@ -127,6 +128,8 @@ class SearchFragment : Fragment() {
 
 
     }
+
+
 
     override fun onResume() {
         super.onResume()

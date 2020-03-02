@@ -9,6 +9,7 @@ class Constant {
         const val SETTING_LOGIN = "SETTING_LOGIN"
         const val SETTING_PROFILE = "SETTING_PROFILE"
         const val VEHICLE_TYPE_SEDAN = "sedan"
+        const val VEHICLE_TYPE_HATCHBACK = "hatchback"
         const val VEHICLE_TYPE_SUV = "suv"
         const val VEHICLE_TYPE_VAN = "van"
         const val VEHICLE_TYPE_PICKUP = "pickup"
