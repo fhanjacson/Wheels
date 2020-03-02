@@ -263,7 +263,7 @@ class VehicleFilterFragment : Fragment() {
 
     private fun brandFilter(brand: String, boolean: Boolean) {
         if (boolean) {
-            if (brand != getString(R.string.text_filter_all_brands).toLowerCase(Locale.getDefault())) {
+            if (brand != getString(R.string.text_filter_all_brands)) {
                 viewmodel.filterBrandString = brand
             } else {
                 viewmodel.filterBrandString = ""

@@ -1,20 +1,18 @@
 package com.fhanjacson.amca.wheels.ui.account
 
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.fhanjacson.amca.wheels.Constant
-import com.fhanjacson.amca.wheels.OnboardingActivity
 import com.fhanjacson.amca.wheels.R
 import com.fhanjacson.amca.wheels.model.AccountSetting
 import com.google.firebase.auth.FirebaseAuth
@@ -30,7 +28,7 @@ class AccountFragment : Fragment(), AccountAdapter.AccountAdapterInterface {
     private lateinit var viewManager: RecyclerView.LayoutManager
     private lateinit var myDataset: ArrayList<AccountSetting>
     private lateinit var profileImageView: ImageView
-    private lateinit var accountView : View
+    private lateinit var accountView: View
     private lateinit var auth: FirebaseAuth
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -57,14 +55,20 @@ class AccountFragment : Fragment(), AccountAdapter.AccountAdapterInterface {
 
         val user = FirebaseAuth.getInstance().currentUser
         if (user != null) {
+            view.noUserLayout_account.visibility = View.GONE
             Log.d(Constant.LOG_TAG, "user is not null")
             view.accountName.text = user.displayName
             view.accountEmail.text = user.email
-            myDataset.add(object : AccountSetting(Constant.SETTING_PROFILE, view.context.getString(R.string.text_profile)){})
-            myDataset.add(object : AccountSetting(Constant.SETTING_LOGOUT, view.context.getString(R.string.text_logout)){})
+            myDataset.add(object : AccountSetting(Constant.SETTING_PROFILE, view.context.getString(R.string.text_profile)) {})
+            myDataset.add(object : AccountSetting(Constant.SETTING_CHANGE_PASSWORD, view.context.getString(R.string.text_change_password)) {})
+            myDataset.add(object : AccountSetting(Constant.SETTING_DELETE_PROFILE, view.context.getString(R.string.text_delete_profile)) {})
+            myDataset.add(object : AccountSetting(Constant.SETTING_LOGOUT, view.context.getString(R.string.text_logout)) {})
         } else {
-            view.accountCard.visibility = View.GONE
-            myDataset.add(object : AccountSetting(Constant.SETTING_LOGIN, view.context.getString(R.string.text_login)){})
+            view.noUserLayout_account.visibility = View.VISIBLE
+            view.loginOrSignupButton_account.setOnClickListener {
+                findNavController().navigate(R.id.action_accountFragment2_to_onboardingFragment2)
+            }
+            myDataset.add(object : AccountSetting(Constant.SETTING_LOGIN, view.context.getString(R.string.text_login)) {})
         }
 
         viewManager = LinearLayoutManager(context)
@@ -72,18 +76,18 @@ class AccountFragment : Fragment(), AccountAdapter.AccountAdapterInterface {
 
         recyclerView = view.accountRecyclerview.apply {
             setHasFixedSize(true)
+            addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
             layoutManager = viewManager
             adapter = viewAdapter
         }
 
 
-
     }
 
     override fun updateUIAfterUserSignOut() {
-            accountView.accountCard.visibility = View.GONE
-            myDataset.clear()
-            myDataset.add(object : AccountSetting(Constant.SETTING_LOGIN, accountView.context.getString(R.string.text_login)){})
-            viewAdapter.notifyDataSetChanged()
+        accountView.noUserLayout_account.visibility = View.VISIBLE
+        myDataset.clear()
+        myDataset.add(object : AccountSetting(Constant.SETTING_LOGIN, accountView.context.getString(R.string.text_login)) {})
+        viewAdapter.notifyDataSetChanged()
     }
 }

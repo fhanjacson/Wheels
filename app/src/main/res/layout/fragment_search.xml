@@ -6,6 +6,25 @@
     android:layout_height="match_parent"
     xmlns:shimmer="http://schemas.android.com/tools">
 
+    <FrameLayout
+        android:id="@+id/emptyView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/vehicleRecyclerview"
+        app:layout_constraintEnd_toEndOf="@+id/vehicleRecyclerview"
+        app:layout_constraintStart_toStartOf="@+id/vehicleRecyclerview"
+        app:layout_constraintTop_toTopOf="@+id/vehicleRecyclerview">
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="No results found."
+            android:textSize="24sp" />
+    </FrameLayout>
+
     <com.facebook.shimmer.ShimmerFrameLayout
         android:id="@+id/shimmer_view_container"
         android:layout_width="0dp"

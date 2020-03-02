@@ -11,9 +11,12 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 
 import com.fhanjacson.amca.wheels.R
+import com.google.firebase.auth.EmailAuthProvider
 import com.google.firebase.auth.FirebaseAuth
+import kotlinx.android.synthetic.*
 import kotlinx.android.synthetic.main.login_fragment.*
 import kotlinx.android.synthetic.main.login_fragment.view.*
 import java.util.regex.Pattern
@@ -39,10 +42,14 @@ class LoginFragment : Fragment() {
 
         loginButton = view.loginButton
 
-        loginButton.setOnClickListener{
+
+        loginButton.setOnClickListener {
             login(view.login_email.text.toString(), view.login_password.text.toString())
+            loginButton.isEnabled = false
         }
     }
+
+
 
     private fun login(email: String, password: String) {
 
@@ -55,12 +62,13 @@ class LoginFragment : Fragment() {
                 Toast.makeText(context, "Login Success!", Toast.LENGTH_SHORT).show()
                 findNavController().popBackStack()
             }
-            .addOnFailureListener{
-                Toast.makeText(context, "Login Fail!", Toast.LENGTH_SHORT).show()
+            .addOnFailureListener {
+                Toast.makeText(context, "Wrong Email or Password entered", Toast.LENGTH_SHORT).show()
+                loginButton.isEnabled = true
             }
     }
 
-    private fun validateForm() : Boolean {
+    private fun validateForm(): Boolean {
         var valid = true
 
         val email = login_email.text.toString()
@@ -90,7 +98,8 @@ class LoginFragment : Fragment() {
         return valid
     }
 
-    private fun isEmailValid(email: String): Boolean = Patterns.EMAIL_ADDRESS.matcher(email).matches()
+    private fun isEmailValid(email: String): Boolean =
+        Patterns.EMAIL_ADDRESS.matcher(email).matches()
 
     private fun isPasswordValid(password: String): Boolean {
         val passwordPattern = Pattern.compile("[a-zA-Z0-9!@#$]{8,24}")

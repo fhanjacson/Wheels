@@ -32,6 +32,7 @@
     <string name="text_logout">Log Out</string>
     <string name="text_login">Login</string>
     <string name="text_profile">Profile</string>
+    <string name="text_delete_profile">Delete Profile</string>
     <string name="text_account">Account</string>
     <string name="text_activities">Activities</string>
     <string name="text_search">Search</string>
@@ -59,5 +60,9 @@
     <string name="text_filter_all_types">All Types</string>
     <string name="text_filter_all_brands">All Brands</string>
     <string name="text_filter_all_transmissions">All Transmissions</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="text_change_password">Change Password</string>
+    <string name="text_delete_my_account">DELETE MY ACCOUNT</string>
 
 </resources>

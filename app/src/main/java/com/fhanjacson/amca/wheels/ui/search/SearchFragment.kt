@@ -47,7 +47,12 @@ class SearchFragment : Fragment() {
 
         val vehicleListUpdateObserver = Observer<List<Vehicle>> {
             val vehicleList: List<Vehicle> = it
-            xvehicleList = it
+            if (vehicleList.isEmpty()) {
+                view.emptyView.visibility = View.VISIBLE
+            } else {
+                view.emptyView.visibility = View.INVISIBLE
+            }
+//            xvehicleList = it
             viewManager = LinearLayoutManager(context)
             viewAdapter = VehicleListAdapter(vehicleList)
             recyclerView = view.vehicleRecyclerview.apply {
