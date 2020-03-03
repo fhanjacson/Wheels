@@ -22,7 +22,7 @@ class ActivityFragment : Fragment() {
     private lateinit var activityTabLayout: TabLayout
     private lateinit var activityViewPager: ViewPager2
     private var activityViewPagerTitle = arrayListOf<String>()
-    var auth = FirebaseAuth.getInstance()
+    private val auth = FirebaseAuth.getInstance()
 
 
     override fun onCreateView(

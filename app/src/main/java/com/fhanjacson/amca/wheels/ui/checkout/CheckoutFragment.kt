@@ -34,8 +34,8 @@ class CheckoutFragment : Fragment() {
     private lateinit var changeDateButton: Button
     private var materialDatePickerBuilder = MaterialDatePicker.Builder.dateRangePicker()
     lateinit var materialDatePicker: MaterialDatePicker<androidx.core.util.Pair<Long, Long>>
-    lateinit var auth: FirebaseAuth
-    lateinit var repo: FirestoreRepository
+    private val auth = FirebaseAuth.getInstance()
+    private val repo = FirestoreRepository()
     lateinit var viewmodel: CheckoutViewModel
     lateinit var viewCheckout: View
     lateinit var selectedVehicle: Vehicle
@@ -50,8 +50,6 @@ class CheckoutFragment : Fragment() {
     ): View? {
 
         val root = inflater.inflate(R.layout.checkout_fragment, container, false)
-        repo = FirestoreRepository()
-        auth = FirebaseAuth.getInstance()
         changeDateButton = root.changeDateButton
         viewmodel = ViewModelProvider(requireActivity()).get(CheckoutViewModel::class.java)
         return root

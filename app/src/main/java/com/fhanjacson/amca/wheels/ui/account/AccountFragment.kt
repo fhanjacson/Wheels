@@ -31,15 +31,14 @@ class AccountFragment : Fragment(), AccountAdapter.AccountAdapterInterface {
     private lateinit var myDataset: ArrayList<AccountSetting>
     private lateinit var profileImageView: ImageView
     private lateinit var accountView: View
-    private lateinit var auth: FirebaseAuth
+    private val auth = FirebaseAuth.getInstance()
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
 
-
-        auth = FirebaseAuth.getInstance()
         accountViewModel = ViewModelProvider(this).get(AccountViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_account, container, false)
 
@@ -55,10 +54,9 @@ class AccountFragment : Fragment(), AccountAdapter.AccountAdapterInterface {
         accountView = view
         myDataset = arrayListOf()
 
-        val user = FirebaseAuth.getInstance().currentUser
+        val user = auth.currentUser
         if (user != null) {
             view.noUserLayout_account.visibility = View.GONE
-            Log.d(Constant.LOG_TAG, "user is not null")
             view.accountName.text = user.displayName
             view.accountEmail.text = user.email
             Log.d(Constant.LOG_TAG, "${user.photoUrl}")
@@ -73,10 +71,11 @@ class AccountFragment : Fragment(), AccountAdapter.AccountAdapterInterface {
             myDataset.add(object : AccountSetting(Constant.SETTING_LOGOUT, view.context.getString(R.string.text_logout)) {})
         } else {
             view.noUserLayout_account.visibility = View.VISIBLE
-            view.loginOrSignupButton_account.setOnClickListener {
-                findNavController().navigate(R.id.action_accountFragment2_to_onboardingFragment2)
-            }
             myDataset.add(object : AccountSetting(Constant.SETTING_LOGIN, view.context.getString(R.string.text_login)) {})
+        }
+
+        view.loginOrSignupButton_account.setOnClickListener {
+            findNavController().navigate(R.id.action_accountFragment2_to_onboardingFragment2)
         }
 
         viewManager = LinearLayoutManager(context)

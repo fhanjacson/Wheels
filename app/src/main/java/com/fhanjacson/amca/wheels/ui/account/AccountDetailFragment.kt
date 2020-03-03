@@ -17,6 +17,9 @@ import com.fhanjacson.amca.wheels.Constant
 
 import com.fhanjacson.amca.wheels.R
 import com.fhanjacson.amca.wheels.base.GlideApp
+import com.fhanjacson.amca.wheels.model.ProfileActivity
+import com.fhanjacson.amca.wheels.repository.FirestoreRepository
+import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.UserProfileChangeRequest
 import com.google.firebase.storage.FirebaseStorage
@@ -38,6 +41,8 @@ class AccountDetailFragment : Fragment() {
     private lateinit var newProfileImageUri: Uri
     private val storage = FirebaseStorage.getInstance()
     private val storageRef = storage.reference
+    private val repo = FirestoreRepository()
+
 
     private lateinit var gsNewProfileImageRef: StorageReference
 
@@ -65,13 +70,13 @@ class AccountDetailFragment : Fragment() {
 
 
             view.saveProfileButton.setOnClickListener {
-                updateProfile()
                 view.saveProfileButton.isEnabled = false
+                updateProfile()
             }
 
             view.changePhotoButton.setOnClickListener {
-                setNewPhoto()
                 view.changePhotoButton.isEnabled = false
+                setNewPhoto()
             }
         }
     }
@@ -138,6 +143,7 @@ class AccountDetailFragment : Fragment() {
             }
 
             user.updateProfile(profileUpdates).addOnSuccessListener {
+                addToAccountHistory(ProfileActivity(user.uid, Timestamp.now(), Constant.ACTIVITY_TYPE_UPDATE_PROFILE, "Profile updated by the user from Wheels mobile application (Android)"))
                 Toast.makeText(context, "Profile saved", Toast.LENGTH_SHORT).show()
                 findNavController().popBackStack()
             }.addOnFailureListener {
@@ -165,5 +171,7 @@ class AccountDetailFragment : Fragment() {
         return valid
     }
 
-
+    private fun addToAccountHistory(activity: ProfileActivity) {
+        repo.addActivity(activity)
+    }
 }

@@ -64,5 +64,9 @@
     <string name="no">No</string>
     <string name="text_change_password">Change Password</string>
     <string name="text_delete_my_account">DELETE MY ACCOUNT</string>
+    <string name="text_account_created">Account created</string>
+    <string name="text_profile_updated">Profile updated</string>
+    <string name="text_password_changed">Password changed</string>
+    <string name="text_account_deleted">Account deleted</string>
 
 </resources>

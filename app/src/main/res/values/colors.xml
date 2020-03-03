@@ -4,4 +4,11 @@
     <color name="colorPrimaryDark">#0A80A0</color>
     <color name="colorAccent">#D81B60</color>
     <color name="background">#dddddd</color>
+
+    <color name="activity_color_green">#43A047</color>
+    <color name="activity_color_red">#D81B60</color>
+    <color name="activity_color_blue">#1E88E5</color>
+    <color name="activity_color_amber">#FB8C00</color>
+    <color name="activity_color_violet">#5E35B1</color>
+
 </resources>

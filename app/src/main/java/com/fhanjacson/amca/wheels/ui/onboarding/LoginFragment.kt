@@ -1,4 +1,4 @@
-package com.fhanjacson.amca.wheels.ui.login
+package com.fhanjacson.amca.wheels.ui.onboarding
 
 import android.os.Bundle
 import android.text.TextUtils
@@ -23,7 +23,7 @@ import java.util.regex.Pattern
 
 class LoginFragment : Fragment() {
 
-    lateinit var auth: FirebaseAuth
+    private val auth = FirebaseAuth.getInstance()
     lateinit var loginButton: Button
     lateinit var emailText: EditText
     lateinit var passwordText: EditText
@@ -32,7 +32,6 @@ class LoginFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        auth = FirebaseAuth.getInstance()
         return inflater.inflate(R.layout.login_fragment, container, false)
     }
 
@@ -44,8 +43,8 @@ class LoginFragment : Fragment() {
 
 
         loginButton.setOnClickListener {
-            login(view.login_email.text.toString(), view.login_password.text.toString())
             loginButton.isEnabled = false
+            login(view.login_email.text.toString(), view.login_password.text.toString())
         }
     }
 
@@ -54,6 +53,7 @@ class LoginFragment : Fragment() {
     private fun login(email: String, password: String) {
 
         if (!validateForm()) {
+            loginButton.isEnabled = true
             return
         }
 

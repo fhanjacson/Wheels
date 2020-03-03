@@ -25,7 +25,8 @@ class VehicleDetailFragment : Fragment() {
     private lateinit var checkoutButton: Button
     private val args by navArgs<VehicleDetailFragmentArgs>()
     private lateinit var vehicleDetail: Vehicle
-    var storage = FirebaseStorage.getInstance()
+    private var storage = FirebaseStorage.getInstance()
+    private val auth = FirebaseAuth.getInstance()
 
 
     companion object {
@@ -132,7 +133,7 @@ class VehicleDetailFragment : Fragment() {
 
 
         checkoutButton.setOnClickListener {
-            val user = FirebaseAuth.getInstance().currentUser
+            val user = auth.currentUser
             if (user != null) {
 //                findNavController().navigate(R.id.action_vehicleDetailFragment_to_checkoutFragment)
 //                val booking = Booking()

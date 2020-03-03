@@ -1,4 +1,4 @@
-package com.fhanjacson.amca.wheels.ui.signup
+package com.fhanjacson.amca.wheels.ui.onboarding
 
 import android.os.Bundle
 import android.text.TextUtils
@@ -15,6 +15,9 @@ import androidx.navigation.fragment.findNavController
 import com.fhanjacson.amca.wheels.Constant
 
 import com.fhanjacson.amca.wheels.R
+import com.fhanjacson.amca.wheels.model.ProfileActivity
+import com.fhanjacson.amca.wheels.repository.FirestoreRepository
+import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.UserProfileChangeRequest
 import kotlinx.android.synthetic.main.signup_fragment.*
@@ -23,15 +26,15 @@ import java.util.regex.Pattern
 
 class SignupFragment : Fragment() {
 
-    lateinit var auth: FirebaseAuth
+    private val auth = FirebaseAuth.getInstance()
     lateinit var signupButton: Button
+    private val repo = FirestoreRepository()
 
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        auth = FirebaseAuth.getInstance()
         return inflater.inflate(R.layout.signup_fragment, container, false)
     }
 
@@ -40,49 +43,55 @@ class SignupFragment : Fragment() {
 
         signupButton = view.signup_button
 
-        signupButton.setOnClickListener{
-            signUp(view.signup_fullname.text.toString(), view.signup_email.text.toString(), view.signup_password.text.toString())
+        signupButton.setOnClickListener {
             signupButton.isEnabled = false
+            signUp(view.signup_fullname.text.toString(), view.signup_email.text.toString(), view.signup_password.text.toString())
         }
     }
 
     private fun signUp(fullName: String, emailAddress: String, password: String) {
 
         if (!validateForm()) {
+            signupButton.isEnabled = true
             return
         }
 
         auth.createUserWithEmailAndPassword(emailAddress, password)
             .addOnSuccessListener {
-            Log.d(Constant.LOG_TAG, "createUserWithEmail:success")
+                Log.d(Constant.LOG_TAG, "createUserWithEmail:success")
                 setUserProfile(fullName)
-        }
+            }
             .addOnFailureListener {
-            Log.d(Constant.LOG_TAG, "createUserWIthEmail:Fail $it")
+                Log.d(Constant.LOG_TAG, "createUserWIthEmail:Fail $it")
                 Toast.makeText(context, "${it.message}", Toast.LENGTH_SHORT).show()
-                signupButton.isEnabled = true
             }
     }
 
 
     fun setUserProfile(fullName: String) {
-        val user = FirebaseAuth.getInstance().currentUser
+        val user = auth.currentUser
 
         val profileUpdates = UserProfileChangeRequest.Builder()
             .setDisplayName(fullName)
 //            .setPhotoUri(Uri.parse("https://example.com/jane-q-user/profile.jpg"))
             .build()
 
-        user?.updateProfile(profileUpdates)
-            ?.addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    Log.d(Constant.LOG_TAG, "User profile updated.")
-                    Toast.makeText(context, "Registration Success!", Toast.LENGTH_SHORT).show()
-                    findNavController().popBackStack()
-                } else {
-                    Toast.makeText(context, "User profile not updated.", Toast.LENGTH_SHORT).show()
-                }
+        user?.updateProfile(profileUpdates)?.addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                Log.d(Constant.LOG_TAG, "User profile updated.")
+                Toast.makeText(context, "Registration Success!", Toast.LENGTH_SHORT).show()
+                addToAccountHistory(ProfileActivity(user.uid, Timestamp.now(), Constant.ACTIVITY_TYPE_ACCOUNT_CREATED, "Account first created"))
+                findNavController().popBackStack()
+            } else {
+                Toast.makeText(context, "User profile not updated.", Toast.LENGTH_SHORT).show()
+                signupButton.isEnabled = true
             }
+        }
+
+    }
+
+    private fun addToAccountHistory(activity: ProfileActivity) {
+        repo.addActivity(activity)
     }
 
     private fun isEmailValid(email: String): Boolean = Patterns.EMAIL_ADDRESS.matcher(email).matches()
@@ -132,7 +141,6 @@ class SignupFragment : Fragment() {
         } else {
             signup_password.error = null
         }
-
         return valid
     }
 }

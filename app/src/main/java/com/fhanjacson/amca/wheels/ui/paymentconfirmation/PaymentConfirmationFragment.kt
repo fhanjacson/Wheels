@@ -26,7 +26,7 @@ import com.fhanjacson.amca.wheels.MainActivity
 
 class PaymentConfirmationFragment : Fragment() {
 
-    lateinit var repo: FirestoreRepository
+    private val repo = FirestoreRepository()
     private lateinit var viewModel: CheckoutViewModel
 
 
@@ -36,7 +36,6 @@ class PaymentConfirmationFragment : Fragment() {
     ): View? {
 
         val root = inflater.inflate(R.layout.paymentconfirmation_fragment, container, false)
-        repo = FirestoreRepository()
         viewModel = ViewModelProvider(requireActivity()).get(CheckoutViewModel::class.java)
 
         return root

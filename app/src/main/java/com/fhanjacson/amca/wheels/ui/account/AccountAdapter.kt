@@ -11,6 +11,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.fhanjacson.amca.wheels.Constant
 import com.fhanjacson.amca.wheels.R
 import com.fhanjacson.amca.wheels.model.AccountSetting
+import com.fhanjacson.amca.wheels.model.ProfileActivity
+import com.fhanjacson.amca.wheels.repository.FirestoreRepository
+import com.google.firebase.Timestamp
 import com.google.firebase.auth.EmailAuthProvider
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.dialog_change_password.*
@@ -24,7 +27,8 @@ class AccountAdapter(
 ) :
     RecyclerView.Adapter<AccountSettingViewHolder>() {
 
-    var auth = FirebaseAuth.getInstance()
+    private val repo = FirestoreRepository()
+    private val auth = FirebaseAuth.getInstance()
     private lateinit var mContext: Context
     private lateinit var inflater: LayoutInflater
 
@@ -97,8 +101,8 @@ class AccountAdapter(
                     }
 
                     changePasswordDialog.changePassword.setOnClickListener {
-                        changePassword()
                         changePasswordDialog.changePassword.isEnabled = false
+                        changePassword()
                     }
 
 
@@ -119,8 +123,8 @@ class AccountAdapter(
                     }
 
                     deleteAccountDialog.deleteAccount.setOnClickListener {
-                        deleteAccount()
                         deleteAccountDialog.deleteAccount.isEnabled = false
+                        deleteAccount()
                     }
                 }
             }
@@ -141,6 +145,7 @@ class AccountAdapter(
 
     private fun changePassword() {
         if (!validateChangePasswordForm()) {
+            changePasswordDialog.changePassword.isEnabled = true
             return
         }
 
@@ -155,6 +160,7 @@ class AccountAdapter(
                     user.updatePassword(newPasswordText_changePassword)
                         .addOnSuccessListener {
                             Toast.makeText(mContext, "Password updated.", Toast.LENGTH_LONG).show()
+                            addToAccountHistory(ProfileActivity(user.uid, Timestamp.now(), Constant.ACTIVITY_TYPE_CHANGE_PASSWORD, "Password changed by user through Wheels mobile application (Android)"))
                             changePasswordDialog.dismiss()
                         }
                         .addOnFailureListener {
@@ -226,6 +232,7 @@ class AccountAdapter(
 
     private fun deleteAccount() {
         if (!validateDeleteAccountForm()) {
+            deleteAccountDialog.deleteAccount.isEnabled = true
             return
         }
 
@@ -237,6 +244,7 @@ class AccountAdapter(
                 .addOnSuccessListener {
                     user.delete().addOnSuccessListener {
                         Toast.makeText(mContext, "Account Deleted.", Toast.LENGTH_LONG).show()
+                        addToAccountHistory(ProfileActivity(user.uid, Timestamp.now(), Constant.ACTIVITY_TYPE_ACCOUNT_DELETED, "Account deletion initiated by user through Wheels mobile application (Android)"))
                         deleteAccountDialog.dismiss()
                         callback.updateUIAfterUserSignOut()
                     }
@@ -289,6 +297,10 @@ class AccountAdapter(
 
     interface AccountAdapterInterface {
         fun updateUIAfterUserSignOut()
+    }
+
+    private fun addToAccountHistory(activity: ProfileActivity) {
+        repo.addActivity(activity)
     }
 
 }

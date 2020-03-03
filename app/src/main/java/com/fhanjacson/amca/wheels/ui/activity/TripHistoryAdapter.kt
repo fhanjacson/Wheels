@@ -12,7 +12,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 
-class TripAdapter(private val tripList: List<BookingResponse>) : RecyclerView.Adapter<TripAdapter.TripViewHolder>(){
+class TripHistoryAdapter(private val tripList: List<BookingResponse>) : RecyclerView.Adapter<TripHistoryAdapter.TripViewHolder>(){
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TripViewHolder {
         return TripViewHolder(
@@ -38,6 +38,8 @@ class TripAdapter(private val tripList: List<BookingResponse>) : RecyclerView.Ad
         sdf = SimpleDateFormat(Constant.DATE_FORMAT_PATTERN_WITH_TIME, Locale.getDefault())
         holder.tripdate.text  = holder.itemView.context.getString(R.string.text_trip_booked_on, sdf.format(tripList[position].bookingDate.toDate()))
         holder.tripprice.text = holder.itemView.context.getString(R.string.text_checkout_total_plural, tripList[position].totalPrice.toString(), tripList[position].totalDay.toString())
+        holder.activityColor.setBackgroundResource(R.drawable.color_bar)
+
 
 
 
@@ -51,5 +53,6 @@ class TripAdapter(private val tripList: List<BookingResponse>) : RecyclerView.Ad
         val tripstart = itemView.startdate_text
         val tripend = itemView.enddate_text
         val vehiclename = itemView.vehiclename_text
+        val activityColor = itemView.colorBar_trip
     }
 }

@@ -6,8 +6,22 @@
     tools:context=".ui.activity.AccountHistoryFragment">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/accounthistoryRecyclerview"
+        android:id="@+id/accountHistoryRecyclerview"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
+
+    <FrameLayout
+        android:id="@+id/noActivityLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="No account activities found."
+            android:textSize="24sp" />
+    </FrameLayout>
+
 
 </FrameLayout>

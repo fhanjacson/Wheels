@@ -13,10 +13,16 @@
             android:id="@+id/action_searchFragment2_to_vehicleFilterFragment"
             app:destination="@id/vehicleFilterFragment"
             app:enterAnim="@anim/fragment_open_enter"
-            app:exitAnim="@anim/fragment_close_exit" />
+            app:exitAnim="@anim/fragment_open_exit"
+            app:popEnterAnim="@anim/fragment_close_enter"
+            app:popExitAnim="@anim/fragment_close_exit" />
         <action
             android:id="@+id/action_searchFragment2_to_vehicleDetailFragment"
-            app:destination="@id/vehicleDetailFragment" />
+            app:destination="@id/vehicleDetailFragment"
+            app:enterAnim="@anim/fragment_open_enter"
+            app:exitAnim="@anim/fragment_open_exit"
+            app:popEnterAnim="@anim/fragment_close_enter"
+            app:popExitAnim="@anim/fragment_close_exit" />
     </fragment>
     <fragment
         android:id="@+id/vehicleFilterFragment"
@@ -30,10 +36,18 @@
         tools:layout="@layout/vehicle_detail_fragment" >
         <action
             android:id="@+id/action_vehicleDetailFragment_to_checkoutFragment"
-            app:destination="@id/checkoutFragment" />
+            app:destination="@id/checkoutFragment"
+            app:enterAnim="@anim/fragment_open_enter"
+            app:exitAnim="@anim/fragment_open_exit"
+            app:popEnterAnim="@anim/fragment_close_enter"
+            app:popExitAnim="@anim/fragment_close_exit" />
         <action
             android:id="@+id/action_vehicleDetailFragment_to_onboardingFragment3"
-            app:destination="@id/onboardingFragment3" />
+            app:destination="@id/onboardingFragment3"
+            app:enterAnim="@anim/fragment_open_enter"
+            app:exitAnim="@anim/fragment_open_exit"
+            app:popEnterAnim="@anim/fragment_close_enter"
+            app:popExitAnim="@anim/fragment_close_exit" />
         <argument
             android:name="vehicleDetail"
             app:argType="com.fhanjacson.amca.wheels.model.Vehicle" />
@@ -49,7 +63,11 @@
         <action
             android:id="@+id/action_checkoutFragment_to_paymentFragment"
             app:destination="@id/paymentFragment"
-            app:popUpTo="@+id/vehicleDetailFragment" />
+            app:popUpTo="@+id/vehicleDetailFragment"
+            app:enterAnim="@anim/fragment_open_enter"
+            app:exitAnim="@anim/fragment_open_exit"
+            app:popEnterAnim="@anim/fragment_close_enter"
+            app:popExitAnim="@anim/fragment_close_exit" />
     </fragment>
     <fragment
         android:id="@+id/onboardingFragment3"

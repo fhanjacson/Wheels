@@ -18,7 +18,6 @@ import com.fhanjacson.amca.wheels.R
 import com.fhanjacson.amca.wheels.model.BookingResponse
 import com.fhanjacson.amca.wheels.repository.FirestoreRepository
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.Query
 import kotlinx.android.synthetic.main.fragment_trip_history.view.*
 
 /**
@@ -26,13 +25,12 @@ import kotlinx.android.synthetic.main.fragment_trip_history.view.*
  */
 class TripHistoryFragment : Fragment() {
 
-    private lateinit var tripAdapter: TripAdapter
-    private var repo = FirestoreRepository()
-    private var auth = FirebaseAuth.getInstance()
+    private lateinit var tripHistoryAdapter: TripHistoryAdapter
+    private val repo = FirestoreRepository()
+    private val auth = FirebaseAuth.getInstance()
     private lateinit var tripRecyclerview: RecyclerView
     private lateinit var fview: View
     private lateinit var viewmodel: ActivityViewModel
-    private var emptyTrip = listOf<BookingResponse>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -48,6 +46,11 @@ class TripHistoryFragment : Fragment() {
 
         if (auth.currentUser != null) {
             viewmodel.bookingList.observe(viewLifecycleOwner, Observer {
+                if (it.isEmpty()) {
+                    view.noTripLayout.visibility = View.VISIBLE
+                } else {
+                    view.noTripLayout.visibility = View.INVISIBLE
+                }
                 setupRecyclerView(it)
             })
         } else {
@@ -59,11 +62,11 @@ class TripHistoryFragment : Fragment() {
         Log.d(Constant.LOG_TAG, "TripHistoryFragment:setupRecyclerView")
         val user = auth.currentUser
         if (user != null) {
-            tripAdapter = TripAdapter(tripList)
+            tripHistoryAdapter = TripHistoryAdapter(tripList)
             tripRecyclerview = fview.triphistoryRecyclerview.apply {
                 setHasFixedSize(true)
                 layoutManager = LinearLayoutManager(context)
-                adapter = tripAdapter
+                adapter = tripHistoryAdapter
             }
         }
 
