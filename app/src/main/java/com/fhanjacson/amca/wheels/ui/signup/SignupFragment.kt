@@ -42,6 +42,7 @@ class SignupFragment : Fragment() {
 
         signupButton.setOnClickListener{
             signUp(view.signup_fullname.text.toString(), view.signup_email.text.toString(), view.signup_password.text.toString())
+            signupButton.isEnabled = false
         }
     }
 
@@ -59,6 +60,7 @@ class SignupFragment : Fragment() {
             .addOnFailureListener {
             Log.d(Constant.LOG_TAG, "createUserWIthEmail:Fail $it")
                 Toast.makeText(context, "${it.message}", Toast.LENGTH_SHORT).show()
+                signupButton.isEnabled = true
             }
     }
 

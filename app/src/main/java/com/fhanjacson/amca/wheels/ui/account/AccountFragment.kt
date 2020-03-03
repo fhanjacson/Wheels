@@ -14,9 +14,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.fhanjacson.amca.wheels.Constant
 import com.fhanjacson.amca.wheels.R
+import com.fhanjacson.amca.wheels.base.GlideApp
 import com.fhanjacson.amca.wheels.model.AccountSetting
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.fragment_account.view.*
+import kotlinx.android.synthetic.main.fragment_account_detail.view.*
 
 class AccountFragment : Fragment(), AccountAdapter.AccountAdapterInterface {
 
@@ -59,6 +61,12 @@ class AccountFragment : Fragment(), AccountAdapter.AccountAdapterInterface {
             Log.d(Constant.LOG_TAG, "user is not null")
             view.accountName.text = user.displayName
             view.accountEmail.text = user.email
+            Log.d(Constant.LOG_TAG, "${user.photoUrl}")
+            if (user.photoUrl != null) {
+                GlideApp.with(view.context).load(user.photoUrl).into(view.profile_imageView)
+            } else {
+                view.profile_imageView.setImageResource(R.drawable.placeholder_profile_image)
+            }
             myDataset.add(object : AccountSetting(Constant.SETTING_PROFILE, view.context.getString(R.string.text_profile)) {})
             myDataset.add(object : AccountSetting(Constant.SETTING_CHANGE_PASSWORD, view.context.getString(R.string.text_change_password)) {})
             myDataset.add(object : AccountSetting(Constant.SETTING_DELETE_PROFILE, view.context.getString(R.string.text_delete_profile)) {})

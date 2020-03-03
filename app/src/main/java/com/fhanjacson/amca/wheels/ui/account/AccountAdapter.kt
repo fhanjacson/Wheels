@@ -71,6 +71,9 @@ class AccountAdapter(
 
             Constant.SETTING_PROFILE -> {
                 holder.left_icon.setImageResource(R.drawable.profile)
+                holder.itemLayout.setOnClickListener {
+                    holder.itemLayout.findNavController().navigate(R.id.action_accountFragment2_to_accountDetailFragment)
+                }
 
             }
 
@@ -95,6 +98,7 @@ class AccountAdapter(
 
                     changePasswordDialog.changePassword.setOnClickListener {
                         changePassword()
+                        changePasswordDialog.changePassword.isEnabled = false
                     }
 
 
@@ -116,6 +120,7 @@ class AccountAdapter(
 
                     deleteAccountDialog.deleteAccount.setOnClickListener {
                         deleteAccount()
+                        deleteAccountDialog.deleteAccount.isEnabled = false
                     }
                 }
             }
@@ -154,6 +159,7 @@ class AccountAdapter(
                         }
                         .addOnFailureListener {
                             Toast.makeText(mContext, "Change password failed. ${it.message}", Toast.LENGTH_LONG).show()
+                            changePasswordDialog.changePassword.isEnabled = true
                         }
                 }
                 .addOnFailureListener {
@@ -162,6 +168,7 @@ class AccountAdapter(
                         "Fail to re-authenticate. ${it.message}",
                         Toast.LENGTH_LONG
                     ).show()
+                    changePasswordDialog.changePassword.isEnabled = true
                 }
         }
     }
@@ -235,10 +242,12 @@ class AccountAdapter(
                     }
                         .addOnFailureListener {
                             Toast.makeText(mContext, "Account deletion failed. ${it.message}", Toast.LENGTH_LONG).show()
+                            deleteAccountDialog.deleteAccount.isEnabled = true
                         }
                 }
                 .addOnFailureListener {
                     Toast.makeText(mContext, "Fail to re-authenticate. ${it.message}", Toast.LENGTH_LONG).show()
+                    deleteAccountDialog.deleteAccount.isEnabled = true
                 }
 
         }

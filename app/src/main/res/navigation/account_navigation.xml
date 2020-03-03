@@ -12,10 +12,18 @@
         <action
             android:id="@+id/action_accountFragment2_to_onboardingFragment2"
             app:destination="@id/onboardingFragment2" />
+        <action
+            android:id="@+id/action_accountFragment2_to_accountDetailFragment"
+            app:destination="@id/accountDetailFragment" />
     </fragment>
     <fragment
         android:id="@+id/onboardingFragment2"
         android:name="com.fhanjacson.amca.wheels.ui.onboarding.OnboardingFragment"
         android:label="@string/text_login_or_signup"
         tools:layout="@layout/fragment_onboarding" />
+    <fragment
+        android:id="@+id/accountDetailFragment"
+        android:name="com.fhanjacson.amca.wheels.ui.account.AccountDetailFragment"
+        android:label="Set Profile"
+        tools:layout="@layout/fragment_account_detail" />
 </navigation>
