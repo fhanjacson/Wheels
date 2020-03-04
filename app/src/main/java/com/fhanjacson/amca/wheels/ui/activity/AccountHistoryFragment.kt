@@ -10,9 +10,8 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.fhanjacson.amca.wheels.Constant
 
 import com.fhanjacson.amca.wheels.R
 import com.fhanjacson.amca.wheels.model.ProfileActivityResponse
@@ -62,9 +61,10 @@ class AccountHistoryFragment : Fragment() {
         val user = auth.currentUser
         if (user != null) {
             accountHistoryAdapter = AccountHistoryAdapter(accountHistoryList)
+            val gridColumnCount = resources.getInteger(R.integer.grid_column_count)
             activityRecyclerView = fview.accountHistoryRecyclerview.apply {
                 setHasFixedSize(true)
-                layoutManager = LinearLayoutManager(context)
+                layoutManager = GridLayoutManager(context, gridColumnCount)
                 adapter = accountHistoryAdapter
             }
         }

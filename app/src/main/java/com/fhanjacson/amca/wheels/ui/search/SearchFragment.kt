@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.facebook.shimmer.ShimmerFrameLayout
 import com.fhanjacson.amca.wheels.Constant
@@ -53,7 +53,8 @@ class SearchFragment : Fragment() {
                 view.emptyView.visibility = View.INVISIBLE
             }
 //            xvehicleList = it
-            viewManager = LinearLayoutManager(context)
+            val gridColumnCount = resources.getInteger(R.integer.grid_column_count)
+            viewManager = GridLayoutManager(context, gridColumnCount)
             viewAdapter = VehicleListAdapter(vehicleList)
             recyclerView = view.vehicleRecyclerview.apply {
                 setHasFixedSize(true)

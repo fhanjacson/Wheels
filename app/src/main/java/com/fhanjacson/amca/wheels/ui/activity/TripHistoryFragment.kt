@@ -10,7 +10,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.fhanjacson.amca.wheels.Constant
 
@@ -63,9 +63,10 @@ class TripHistoryFragment : Fragment() {
         val user = auth.currentUser
         if (user != null) {
             tripHistoryAdapter = TripHistoryAdapter(tripList)
+            val gridColumnCount = resources.getInteger(R.integer.grid_column_count)
             tripRecyclerview = fview.triphistoryRecyclerview.apply {
                 setHasFixedSize(true)
-                layoutManager = LinearLayoutManager(context)
+                layoutManager = GridLayoutManager(context, gridColumnCount)
                 adapter = tripHistoryAdapter
             }
         }

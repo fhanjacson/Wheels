@@ -116,6 +116,9 @@ class VehicleFilterFragment : Fragment() {
     }
 
     private fun resetFilter() {
+        checkFirstChip(typeChipGroup)
+        checkFirstChip(brandChipGroup)
+        checkFirstChip(transmissionChipGroup)
         viewmodel.vehicleFilterQuery = viewmodel.defaultVehicleFilterQuery
     }
 
@@ -165,20 +168,20 @@ class VehicleFilterFragment : Fragment() {
         setupInitCheck()
     }
 
+    fun checkFirstChip(chipGroup: ChipGroup) {
+        val chip = chipGroup.getChildAt(0) as Chip
+        chip.isChecked = true
+    }
+
     fun setupInitCheck() {
         if (viewmodel.filterTypeString.isBlank()) {
-            val chip = typeChipGroup.getChildAt(0) as Chip
-            chip.isChecked = true
+            checkFirstChip(typeChipGroup)
         }
-
         if (viewmodel.filterBrandString.isBlank()) {
-            val chip = brandChipGroup.getChildAt(0) as Chip
-            chip.isChecked = true
+            checkFirstChip(brandChipGroup)
         }
-
         if (viewmodel.filterTransmissionString.isBlank()) {
-            val chip = transmissionChipGroup.getChildAt(0) as Chip
-            chip.isChecked = true
+            checkFirstChip(transmissionChipGroup)
         }
     }
 
