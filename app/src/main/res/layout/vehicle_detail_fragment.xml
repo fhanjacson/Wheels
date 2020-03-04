@@ -6,15 +6,16 @@
     android:layout_width="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <ScrollView
-
+    <com.fhanjacson.amca.wheels.base.MapScrollview
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:context=".ui.vehicledetail.VehicleDetailFragment">
+        tools:context=".ui.vehicledetail.VehicleDetailFragment"
+        android:fillViewport="true"
+        android:orientation="vertical">
 
 
         <LinearLayout
@@ -313,14 +314,14 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:id="@+id/textView10"
+                    android:id="@+id/vehicledetail_description"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="16dp"
                     android:layout_marginBottom="8dp"
-                    android:text="TextView TextView TextView TextView TextView TextView TextView TextView TextView TextView TextView TextView TextView TextView TextView TextView TextView TextView TextView TextView TextView TextView TextView TextView TextView TextView TextView "
+                    android:text="Vehicle description not available."
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -332,9 +333,74 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/locationLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="8dp">
+
+                <TextView
+                    android:id="@+id/textView16"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="PICKUP and DROP OFF"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/vehicledetail_location"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:text="Car park @ APU, TPM, Kuala Lumpur"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView16" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/mapLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="8dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/vehicledetail_location">
+
+                    <fragment
+                        android:id="@+id/map"
+                        android:name="com.google.android.gms.maps.SupportMapFragment"
+                        android:layout_width="match_parent"
+                        android:layout_height="300dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:context=".MapFragment" />
+
+                    <com.google.android.material.floatingactionbutton.FloatingActionButton
+                        android:id="@+id/reCenterMap"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginBottom="8dp"
+                        android:clickable="true"
+                        android:src="@android:drawable/ic_menu_mylocation"
+                        app:backgroundTint="#E53935"
+                        app:layout_constraintBottom_toBottomOf="@+id/map"
+                        app:layout_constraintEnd_toEndOf="@+id/map"
+                        tools:srcCompat="@tools:sample/avatars" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
         </LinearLayout>
 
-    </ScrollView>
+    </com.fhanjacson.amca.wheels.base.MapScrollview>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"
