@@ -232,6 +232,13 @@ class AccountAdapter(
             newPasswordConfirmLayout.error = null
         }
 
+        if (oldPasswordText_changePassword == newPasswordText_changePassword) {
+            newPasswordLayout.error = "New password can't be the same as the old password"
+            valid = false
+        } else {
+            newPasswordLayout.error = null
+        }
+
         if (newPasswordText_changePassword != newPasswordConfirmText) {
             newPasswordConfirmLayout.error = "Password does not match"
             valid = false
