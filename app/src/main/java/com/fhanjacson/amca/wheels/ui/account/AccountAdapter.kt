@@ -2,6 +2,7 @@ package com.fhanjacson.amca.wheels.ui.account
 
 import android.app.AlertDialog
 import android.content.Context
+import android.content.DialogInterface
 import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -132,9 +133,20 @@ class AccountAdapter(
             Constant.SETTING_LOGOUT -> {
                 holder.left_icon.setImageResource(R.drawable.logout)
                 holder.itemLayout.setOnClickListener {
-                    auth.signOut()
-                    callback.updateUIAfterUserSignOut()
-                    Toast.makeText(mContext, "Logged Out", Toast.LENGTH_SHORT).show()
+                    val logoutDialogBuilder = AlertDialog.Builder(mContext)
+                    logoutDialogBuilder.setTitle("Are you sure you want to logout?")
+                    logoutDialogBuilder.setPositiveButton(android.R.string.yes) { _, _ ->
+                        auth.signOut()
+                        callback.updateUIAfterUserSignOut()
+                        Toast.makeText(mContext, "Logged Out", Toast.LENGTH_SHORT).show()
+                    }
+                    logoutDialogBuilder.setNegativeButton(android.R.string.no) { _, _ ->
+
+                    }
+                    val logoutDialog = logoutDialogBuilder.create()
+                    logoutDialog.show()
+
+
                 }
             }
 
