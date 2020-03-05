@@ -11,29 +11,22 @@ import android.util.AttributeSet
 
 
 class MapScrollview(mContext: Context, attrs: AttributeSet): ScrollView(mContext, attrs) {
-
-
     override fun onInterceptTouchEvent(ev: MotionEvent): Boolean {
         val action = ev.action
         when (action) {
             MotionEvent.ACTION_DOWN ->
                 //Log.i("CustomScrollView", "onInterceptTouchEvent: DOWN super false" );
                 super.onTouchEvent(ev)
-
             MotionEvent.ACTION_MOVE -> return false // redirect MotionEvents to ourself
-
             MotionEvent.ACTION_CANCEL ->
                 // Log.i("CustomScrollView", "onInterceptTouchEvent: CANCEL super false" );
                 super.onTouchEvent(ev)
-
             MotionEvent.ACTION_UP ->
                 //Log.i("CustomScrollView", "onInterceptTouchEvent: UP super false" );
                 return false
-
             else -> {
             }
         }//Log.i("CustomScrollView", "onInterceptTouchEvent: " + action );
-
         return false
     }
 

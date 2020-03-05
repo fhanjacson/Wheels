@@ -36,7 +36,7 @@ class ActivityViewModel : ViewModel() {
     private fun getActivityList(query: Query): LiveData<List<ProfileActivityResponse>> {
         return repo.getActivityList(query)
     }
-
+}
 
 
 
@@ -45,4 +45,3 @@ class ActivityViewModel : ViewModel() {
 //        value = "This is Activity Fragment"
 //    }
 //    val text: LiveData<String> = _text
-}

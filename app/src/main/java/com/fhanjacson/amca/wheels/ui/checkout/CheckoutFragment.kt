@@ -184,7 +184,9 @@ class CheckoutFragment : Fragment() {
         viewmodel.booking.bookingDate = Timestamp(Date())
         repo.addBooking(viewmodel.booking).addOnSuccessListener {
             viewmodel.bookingid = it.id
-            findNavController().navigate(R.id.action_checkoutFragment_to_paymentFragment)
+            repo.incrementVehicleTrip(viewmodel.booking.vehicleID).addOnSuccessListener {
+                findNavController().navigate(R.id.action_checkoutFragment_to_paymentFragment)
+            }
 
 //            it.get().addOnSuccessListener { doc ->
 //                val mBooking = doc.toObject(Booking::class.java)

@@ -23,8 +23,4 @@ class SearchViewModel : ViewModel() {
         vehicleList = repo.getVehicleList(vehicleFilterQuery)
     }
 
-
-
-
-
 }

@@ -22,7 +22,6 @@ import kotlinx.android.synthetic.main.fragment_account_detail.view.*
 
 class AccountFragment : Fragment(), AccountAdapter.AccountAdapterInterface {
 
-    private lateinit var accountViewModel: AccountViewModel
 
 
     private lateinit var recyclerView: RecyclerView
@@ -39,7 +38,6 @@ class AccountFragment : Fragment(), AccountAdapter.AccountAdapterInterface {
         savedInstanceState: Bundle?
     ): View? {
 
-        accountViewModel = ViewModelProvider(this).get(AccountViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_account, container, false)
 
         profileImageView = root.profile_imageView

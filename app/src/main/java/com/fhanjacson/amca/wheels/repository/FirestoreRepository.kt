@@ -9,7 +9,6 @@ import com.google.firebase.firestore.*
 import java.util.ArrayList
 
 class FirestoreRepository {
-    val TAG = "FIREBASE_REPOSITORY"
     var fireStoreDB = FirebaseFirestore.getInstance()
 
     fun vehicleList(): CollectionReference {
@@ -23,21 +22,6 @@ class FirestoreRepository {
     fun activityList(): CollectionReference {
         return fireStoreDB.collection("activityList")
     }
-
-    fun getVehicleList(): MutableLiveData<List<Vehicle>> {
-        val data = MutableLiveData<List<Vehicle>>()
-        vehicleList().get().addOnSuccessListener { docs ->
-            val mVehicleList = mutableListOf<Vehicle>()
-            for (doc in docs) {
-                val vehicle = doc.toObject(Vehicle::class.java)
-                vehicle.id = doc.id
-                mVehicleList.add(vehicle)
-            }
-            data.value = mVehicleList
-        }
-        return data
-    }
-
 
     fun getVehicleList(query: Query): MutableLiveData<List<Vehicle>> {
         val data = MutableLiveData<List<Vehicle>>()
@@ -55,6 +39,11 @@ class FirestoreRepository {
 
     fun addBooking(booking: Booking): Task<DocumentReference> {
         return tripList().add(booking)
+    }
+
+    fun incrementVehicleTrip(vehicleID: String): Task<Void> {
+        val doc = vehicleList().document(vehicleID)
+        return doc.update("trip", FieldValue.increment(1))
     }
 
     fun getTripList(query: Query): MutableLiveData<List<BookingResponse>> {
@@ -80,12 +69,10 @@ class FirestoreRepository {
             }
         }
         return data
-
     }
 
     fun addActivity(activity: ProfileActivity): Task<DocumentReference> {
         return activityList().add(activity).addOnSuccessListener {
-
         }
     }
 
@@ -112,8 +99,5 @@ class FirestoreRepository {
             }
         }
         return data
-
     }
-
-
 }

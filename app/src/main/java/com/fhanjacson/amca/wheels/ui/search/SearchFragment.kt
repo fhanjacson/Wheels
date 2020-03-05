@@ -34,6 +34,7 @@ class SearchFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
+//     asd
         searchViewModel = ViewModelProvider(requireActivity()).get(SearchViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_search, container, false)
         shimmerView = root.shimmer_view_container

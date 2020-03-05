@@ -16,7 +16,6 @@ import androidx.navigation.fragment.navArgs
 import com.fhanjacson.amca.wheels.R
 import com.google.firebase.auth.EmailAuthProvider
 import com.google.firebase.auth.FirebaseAuth
-import kotlinx.android.synthetic.*
 import kotlinx.android.synthetic.main.login_fragment.*
 import kotlinx.android.synthetic.main.login_fragment.view.*
 import java.util.regex.Pattern
@@ -37,10 +36,9 @@ class LoginFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+// directly
 
         loginButton = view.loginButton
-
 
         loginButton.setOnClickListener {
             loginButton.isEnabled = false
