@@ -3,7 +3,6 @@ package com.fhanjacson.amca.wheels
 
 import android.view.View
 import android.view.ViewGroup
-import androidx.test.espresso.Espresso.onData
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.*
 import androidx.test.espresso.assertion.ViewAssertions.matches
@@ -14,23 +13,24 @@ import androidx.test.runner.AndroidJUnit4
 import com.google.firebase.auth.FirebaseAuth
 import org.hamcrest.Description
 import org.hamcrest.Matcher
-import org.hamcrest.Matchers.*
+import org.hamcrest.Matchers.`is`
+import org.hamcrest.Matchers.allOf
 import org.hamcrest.TypeSafeMatcher
-import org.hamcrest.core.IsInstanceOf
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import java.util.concurrent.ThreadLocalRandom
 
 @LargeTest
 @RunWith(AndroidJUnit4::class)
-class VehicleBookingTest {
+class ProfileUpdateTest {
 
     @Rule
     @JvmField
     var mActivityTestRule = ActivityTestRule(SplashScreenActivity::class.java)
 
     @Test
-    fun vehicleBookingTest3() {
+    fun profileUpdateTest() {
         FirebaseAuth.getInstance().signOut()
         val bottomNavigationItemView = onView(
             allOf(
@@ -129,45 +129,15 @@ class VehicleBookingTest {
 
         onView(withId(R.id.accountEmail)).waitUntilVisible(3000).check(matches(withText("test@mail.com")))
 
-        val bottomNavigationItemView2 = onView(
+        val constraintLayout = onView(
             allOf(
-                withId(R.id.search_navigation), withContentDescription("Search"),
-                childAtPosition(
-                    childAtPosition(
-                        withId(R.id.nav_view),
-                        0
-                    ),
-                    0
-                ),
-                isDisplayed()
-            )
-        )
-        bottomNavigationItemView2.perform(click())
-
-        val textView = onView(
-            allOf(
-                withId(R.id.vehicleName), withText("PERODUA BEZZA"),
-                childAtPosition(
-                    childAtPosition(
-                        withId(R.id.vehicleCard),
-                        0
-                    ),
-                    1
-                ),
-                isDisplayed()
-            )
-        )
-        textView.check(matches(withText("PERODUA BEZZA")))
-
-        val cardView = onView(
-            allOf(
-                withId(R.id.vehicleCard),
+                withId(R.id.accountSettingItemLayout),
                 childAtPosition(
                     allOf(
-                        withId(R.id.vehicleRecyclerview),
+                        withId(R.id.accountRecyclerview),
                         childAtPosition(
-                            withId(R.id.fragment_search_layout),
-                            2
+                            withClassName(`is`("android.widget.LinearLayout")),
+                            1
                         )
                     ),
                     0
@@ -175,16 +145,85 @@ class VehicleBookingTest {
                 isDisplayed()
             )
         )
-        cardView.perform(click())
+        constraintLayout.perform(click())
+
+        val newName = "DRAGON SLAYER" + ThreadLocalRandom.current().nextInt(10,100).toString()
+
+        val textInputEditText = onView(
+            withId(R.id.profileFullNameText)
+        )
+
+        textInputEditText.perform(scrollTo(), replaceText(newName))
+
+
 
         val materialButton4 = onView(
             allOf(
-                withId(R.id.checkoutButton), withText("CHECKOUT"),
+                withId(R.id.saveProfileButton), withText("SAVE PROFILE"),
                 childAtPosition(
                     allOf(
-                        withId(R.id.constraintLayout),
+                        withId(R.id.constraintLayout2),
                         childAtPosition(
-                            withClassName(`is`("androidx.constraintlayout.widget.ConstraintLayout")),
+                            withId(R.id.frameLayout),
+                            1
+                        )
+                    ),
+                    0
+                ),
+                isDisplayed()
+            )
+        )
+        materialButton4.perform(click())
+
+        val textView2 = onView(
+            allOf(
+                withId(R.id.accountName),
+                isDisplayed()
+            )
+        )
+        textView2.waitUntilVisible(3000).check(matches(withText(newName)))
+
+        val constraintLayout2 = onView(
+            allOf(
+                withId(R.id.accountSettingItemLayout),
+                childAtPosition(
+                    allOf(
+                        withId(R.id.accountRecyclerview),
+                        childAtPosition(
+                            withClassName(`is`("android.widget.LinearLayout")),
+                            1
+                        )
+                    ),
+                    1
+                ),
+                isDisplayed()
+            )
+        )
+        constraintLayout2.perform(click())
+
+        val materialButton5 = onView(
+            allOf(
+                withId(R.id.cancelButton), withText("Cancel"),
+                childAtPosition(
+                    childAtPosition(
+                        withId(android.R.id.custom),
+                        0
+                    ),
+                    1
+                ),
+                isDisplayed()
+            )
+        )
+        materialButton5.perform(click())
+
+        val constraintLayout3 = onView(
+            allOf(
+                withId(R.id.accountSettingItemLayout),
+                childAtPosition(
+                    allOf(
+                        withId(R.id.accountRecyclerview),
+                        childAtPosition(
+                            withClassName(`is`("android.widget.LinearLayout")),
                             1
                         )
                     ),
@@ -193,130 +232,54 @@ class VehicleBookingTest {
                 isDisplayed()
             )
         )
-        materialButton4.perform(click())
+        constraintLayout3.perform(click())
 
-        val materialButton5 = onView(
+        val materialButton6 = onView(
             allOf(
-                withId(R.id.changeDateButton), withText("Change"),
+                withId(R.id.cancelButton), withText("Cancel"),
                 childAtPosition(
-                    allOf(
-                        withId(R.id.tripDateLayout),
-                        childAtPosition(
-                            withClassName(`is`("android.widget.LinearLayout")),
-                            2
-                        )
+                    childAtPosition(
+                        withId(android.R.id.custom),
+                        0
                     ),
                     1
-                )
-            )
-        )
-        materialButton5.perform(scrollTo(), click())
-
-//        val frameLayout = onView(
-//            allOf(
-//                withId(R.id.mtrl_calendar_frame),
-//                childAtPosition(
-//                    allOf(
-//                        withId(R.id.mtrl_calendar_main_pane),
-//                        childAtPosition(
-//                            IsInstanceOf.instanceOf(android.widget.LinearLayout::class.java),
-//                            1
-//                        )
-//                    ),
-//                    0
-//                ),
-//                isDisplayed()
-//            )
-//        )
-//        frameLayout.waitUntilVisible(3000).check(matches(isDisplayed()))
-
-        val textView2 = onView(
-            allOf(
-                withText("19"), withContentDescription("Thu, Mar 19"),
+                ),
                 isDisplayed()
             )
         )
-        textView2.check(matches(isDisplayed()))
+        materialButton6.perform(click())
 
-        textView2.waitUntilVisible(3000).perform(click())
-
-
-//        val materialTextView = onData(anything())
-//            .inAdapterView(
-//                allOf(
-//                    withId(R.id.month_grid),
-//                    childAtPosition(
-//                        withClassName(`is`("android.widget.LinearLayout")),
-//                        1
-//                    )
-//                )
-//            )
-//            .atPosition(18)
-//        materialTextView.perform(click())
-//
-        val textView3 = onView(
+        val constraintLayout4 = onView(
             allOf(
-                withText("23"), withContentDescription("Mon, Mar 23"),
+                withId(R.id.accountSettingItemLayout),
+                childAtPosition(
+                    allOf(
+                        withId(R.id.accountRecyclerview),
+                        childAtPosition(
+                            withClassName(`is`("android.widget.LinearLayout")),
+                            1
+                        )
+                    ),
+                    3
+                ),
                 isDisplayed()
             )
         )
-        textView3.check(matches(isDisplayed()))
-        textView3.waitUntilVisible(3000).perform(click())
+        constraintLayout4.perform(click())
 
         val materialButton7 = onView(
             allOf(
-                withId(R.id.confirm_button), withText("OK"),
+                withId(android.R.id.button2), withText("Cancel"),
                 childAtPosition(
-                    allOf(
-                        withId(R.id.date_picker_actions),
-                        childAtPosition(
-                            withId(R.id.mtrl_calendar_main_pane),
-                            1
-                        )
+                    childAtPosition(
+                        withClassName(`is`("android.widget.ScrollView")),
+                        0
                     ),
-                    1
-                ),
-                isDisplayed()
+                    2
+                )
             )
         )
-        materialButton7.waitUntilVisible(2000).perform(click())
-
-        val materialButton8 = onView(
-            allOf(
-                withId(R.id.proceed_button), withText("PROCEED"),
-                childAtPosition(
-                    allOf(
-                        withId(R.id.checkout_bottomLayout),
-                        childAtPosition(
-                            withClassName(`is`("androidx.constraintlayout.widget.ConstraintLayout")),
-                            1
-                        )
-                    ),
-                    0
-                ),
-                isDisplayed()
-            )
-        )
-        materialButton8.waitUntilVisible(3000).perform(click())
-
-        val materialButton9 = onView(
-            allOf(
-                withId(R.id.mytrip_button), withText("My Trips"),
-                childAtPosition(
-                    allOf(
-                        withId(R.id.cardView),
-                        childAtPosition(
-                            withClassName(`is`("androidx.constraintlayout.widget.ConstraintLayout")),
-                            1
-                        )
-                    ),
-                    0
-                ),
-                isDisplayed()
-            )
-        )
-        materialButton9.waitUntilVisible(5000).perform(click())
-
+        materialButton7.perform(scrollTo(), click())
     }
 
     private fun childAtPosition(

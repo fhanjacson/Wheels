@@ -30,6 +30,7 @@ class FirebaseSignUpTest {
 
     @Test
     fun firebaseSignUpTest() {
+        FirebaseAuth.getInstance().signOut()
         val bottomNavigationItemView = onView(
             allOf(
                 withId(R.id.account_navigation), withContentDescription("Account"),
@@ -158,17 +159,7 @@ class FirebaseSignUpTest {
         materialButton3.perform(click())
 
         val textView = onView(
-            allOf(
-                withId(R.id.accountEmail),
-                childAtPosition(
-                    childAtPosition(
-                        withId(R.id.accountCard),
-                        0
-                    ),
-                    2
-                ),
-                isDisplayed()
-            )
+                withId(R.id.accountEmail)
         )
         textView.waitUntilVisible(5000).check(matches(withText(email)))
 
