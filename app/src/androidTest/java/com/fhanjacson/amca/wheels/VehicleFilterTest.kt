@@ -11,6 +11,7 @@ import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.filters.LargeTest
 import androidx.test.rule.ActivityTestRule
 import androidx.test.runner.AndroidJUnit4
+import com.google.firebase.auth.FirebaseAuth
 import org.hamcrest.Description
 import org.hamcrest.Matcher
 import org.hamcrest.Matchers.allOf
@@ -29,6 +30,7 @@ class VehicleFilterTest {
 
     @Test
     fun vehicleFilterTest() {
+        FirebaseAuth.getInstance().signOut()
         val floatingActionButton = onView(
             allOf(
                 withId(R.id.filterFAB),
